@@ -13,11 +13,16 @@ import {
     useDisclosure,
     BoxProps,
     FlexProps,
+    useColorMode,
+    FormControl,
+    FormLabel,
+    Switch,
 } from '@chakra-ui/react';
 import {
     FiHome,
     FiSettings,
     FiMenu,
+    FiActivity,
 } from 'react-icons/fi';
 import { IconType } from 'react-icons';
 import { ReactText } from 'react';
@@ -25,10 +30,12 @@ import { ReactText } from 'react';
 interface LinkItemProps {
     name: string;
     icon: IconType;
+    url: string;
 }
 const LinkItems: Array<LinkItemProps> = [
-    { name: 'Home', icon: FiHome },
-    { name: 'Settings', icon: FiSettings },
+    { name: 'Home', icon: FiHome, url: '/' },
+    { name: 'Test', icon: FiActivity, url: '/test' },
+    { name: 'Settings', icon: FiSettings, url: '/settings' },
 ];
 
 export default function SidebarWithHeader({
@@ -37,6 +44,7 @@ export default function SidebarWithHeader({
     children: ReactNode;
 }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
+
     return (
         <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
             <SidebarContent
@@ -69,6 +77,8 @@ interface SidebarProps extends BoxProps {
 }
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+    const { toggleColorMode } = useColorMode();
+
     return (
         <Box
             transition="3s ease"
@@ -83,21 +93,39 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
                 <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
             </Flex>
             {LinkItems.map((link) => (
-                <NavItem key={link.name} icon={link.icon}>
+                <NavItem key={link.name} icon={link.icon} url={link.url}>
                     {link.name}
                 </NavItem>
             ))}
+
+            <Flex
+                align="center"
+                p="4"
+                mx="4"
+                borderRadius="lg"
+                role="group"
+                cursor="pointer"
+                {...rest}>
+                <FormControl display='flex' alignItems='center'>
+                    <FormLabel htmlFor='dark-mode-switch' mb='0'>
+                        Dark Mode
+                    </FormLabel>
+                    <Switch onChange={toggleColorMode} id='dark-mode-switch' />
+                </FormControl>
+            </Flex>
+
         </Box>
     );
 };
 
 interface NavItemProps extends FlexProps {
     icon: IconType;
+    url: string;
     children: ReactText;
 }
-const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
+const NavItem = ({ icon, url, children, ...rest }: NavItemProps) => {
     return (
-        <Link href="#" style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
+        <Link href={url} style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
             <Flex
                 align="center"
                 p="4"
