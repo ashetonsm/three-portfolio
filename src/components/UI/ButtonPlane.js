@@ -10,7 +10,6 @@ export const ButtonPlane = (props) => {
 
     const ref = useRef()
     const [hovered, hover] = useState(false)
-    //const [clicked, click] = useState(false)
 
     return (
         <mesh
