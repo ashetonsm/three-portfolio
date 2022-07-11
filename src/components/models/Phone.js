@@ -8,17 +8,17 @@ import { useGLTF } from "@react-three/drei"
 import { useSpring, animated, config } from "@react-spring/three"
 
 export default function Model({ ...props }) {
-  const group = useRef();
+  const group = useRef()
 
   const [hovered, hover] = useState(false)
   const [active, setActive] = useState(false)
-  const { nodes, materials, color } = useGLTF("models/Phone.gltf")
+  const { nodes, materials } = useGLTF("models/Phone.gltf")
 
   useFrame((state, delta) => (group.current.rotation.y += 0.01))
 
   const handleClick = (obj) => {
       setActive(true)
-      obj.parent.position.set(0, 0, 0)
+      obj.parent.position.set(obj.parent.position.x, 2, 0)
       props.onActive(obj)
   }
 
@@ -29,7 +29,7 @@ export default function Model({ ...props }) {
   const { scale } = useSpring({
       scale: active ? 1.5 : 1,
       config: config.gentle
-    });
+    })
 
   return (
     <group ref={group} {...props} dispose={null}>
@@ -39,18 +39,16 @@ export default function Model({ ...props }) {
         receiveShadow
         geometry={nodes.Telephone.geometry}
         material={nodes.Telephone.material}
-        scale={[1, 1, 0.5]}
+        rotation={[25.5, 0, 0]}
+        scale={scale}
 
         makeInactive={(event) => makeInactive()}
         onClick={(event) => handleClick(event.object)}
         onPointerOver={(event) => hover(true)}
         onPointerOut={(event) => hover(false)}
-
-        color={hovered && !active ? '#ffffff' : props.color}
-
       />
     </group>
-  );
+  )
 }
 
-useGLTF.preload("/Phone.gltf");
+useGLTF.preload("/Phone.gltf")

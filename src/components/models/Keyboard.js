@@ -8,7 +8,7 @@ import { useGLTF } from "@react-three/drei"
 import { useSpring, animated, config } from "@react-spring/three"
 
 export default function Model({ ...props }) {
-  const group = useRef();
+  const group = useRef()
   const [hovered, hover] = useState(false)
   const [active, setActive] = useState(false)
   const { nodes, materials } = useGLTF("models/Keyboard.gltf")
@@ -17,7 +17,7 @@ export default function Model({ ...props }) {
 
   const handleClick = (obj) => {
       setActive(true)
-      obj.parent.position.set(0, 0, 0)
+      obj.parent.position.set(obj.parent.position.x, 2, 0)
       props.onActive(obj)
   }
 
@@ -38,7 +38,8 @@ export default function Model({ ...props }) {
         receiveShadow
         geometry={nodes.Keyboard.geometry}
         material={nodes.Keyboard.material}
-
+        scale={scale}
+        rotation={[25.5, 0, 0]}
 
         makeInactive={(event) => makeInactive()}
         onClick={(event) => handleClick(event.object)}
@@ -46,7 +47,7 @@ export default function Model({ ...props }) {
         onPointerOut={(event) => hover(false)}
       />
     </group>
-  );
+  )
 }
 
-useGLTF.preload("/Keyboard.gltf");
+useGLTF.preload("/Keyboard.gltf")
