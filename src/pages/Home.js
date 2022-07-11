@@ -29,6 +29,7 @@ export const Home = ({ props }) => {
         objList.forEach(mesh => {
             mesh.position.set(increment, 0, 0)
             increment = increment + 2
+            mesh.makeInactive()
         });
     }
 
