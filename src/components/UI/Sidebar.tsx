@@ -103,9 +103,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
                 p="4"
                 mx="4"
                 borderRadius="lg"
-                role="group"
-                cursor="pointer"
-                {...rest}>
+                cursor="pointer">
                 <FormControl display='flex' alignItems='center'>
                     <FormLabel htmlFor='dark-mode-switch' mb='0'>
                         Dark Mode
@@ -113,7 +111,6 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
                     <Switch onChange={toggleColorMode} id='dark-mode-switch' />
                 </FormControl>
             </Flex>
-
         </Box>
     );
 };
@@ -179,7 +176,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 
             <Flex alignItems={'center'}>
                 <Text
-                    display={{ base: 'flex', md: 'flex' }}
+                    display={{ base: 'none', md: 'flex' }}
                     fontSize="2xl"
                     fontFamily="monospace"
                     fontWeight="bold">

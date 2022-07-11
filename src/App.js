@@ -19,7 +19,6 @@ function App() {
           </SidebarWithHeader>
 
           <Routes>
-            <Route path="/" element={<SidebarWithHeader></SidebarWithHeader>} />
             <Route path="/test" element={<div>Hello world</div>} />
           </Routes>
 
