@@ -1,7 +1,6 @@
 import { Canvas } from "@react-three/fiber"
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Box } from "../components/models/Box"
-import { ButtonPlane } from "../components/UI/ButtonPlane";
 
 export const Home = ({ props }) => {
 
