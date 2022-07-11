@@ -1,5 +1,6 @@
 import { useState, useRef } from "react"
 import { useFrame } from '@react-three/fiber'
+import { useSpring, animated, config } from "@react-spring/three"
 
 export const Box = (props) => {
 
@@ -11,21 +12,34 @@ export const Box = (props) => {
     useFrame((state, delta) => (ref.current.rotation.x += 0.01))
 
     const handleClick = (obj) => {
+        console.log(scale)
         setActive(true)
         obj.position.set(0, 0, 0)
         props.onActive(obj)
     }
 
+    const makeInactive = () => {
+        setActive(false)
+    }
+
+    const { scale } = useSpring({
+        scale: active ? 1.5 : 1,
+        config: config.gentle
+      });
+
     return (
-        <mesh
+        <animated.mesh
             {...props}
             ref={ref}
+            scale={scale}
+            makeInactive={(event) => makeInactive()}
             onClick={(event) => handleClick(event.object)}
             onPointerOver={(event) => hover(true)}
-            onPointerOut={(event) => hover(false)}>
+            onPointerOut={(event) => hover(false)}
+            >
             <boxGeometry args={[1, 1, 1]} />
-            <meshStandardMaterial color={hovered ? '#474747' : props.color} />
-        </mesh>
+            <meshStandardMaterial color={hovered && !active ? '#ffffff' : props.color} />
+        </animated.mesh>
     )
 
 }
