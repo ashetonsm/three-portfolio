@@ -20,9 +20,11 @@ import {
 } from '@chakra-ui/react';
 import {
     FiHome,
-    FiSettings,
     FiMenu,
-    FiActivity,
+    FiMail,
+    FiPackage,
+    FiPenTool,
+
 } from 'react-icons/fi';
 import { IconType } from 'react-icons';
 import { ReactText } from 'react';
@@ -34,8 +36,9 @@ interface LinkItemProps {
 }
 const LinkItems: Array<LinkItemProps> = [
     { name: 'Home', icon: FiHome, url: '/' },
-    { name: 'Test', icon: FiActivity, url: '/test' },
-    { name: 'Settings', icon: FiSettings, url: '/settings' },
+    { name: '3D Art', icon: FiPackage, url: '/gallery3D' },
+    { name: '2D Art', icon: FiPenTool, url: '/gallery2D' },
+    { name: 'Contact', icon: FiMail, url: '/contact' },
 ];
 
 export default function SidebarWithHeader({
@@ -46,7 +49,7 @@ export default function SidebarWithHeader({
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     return (
-        <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
+        <Box minH="100vh" bg={useColorModeValue('white', 'gray.900')}>
             <SidebarContent
                 onClose={() => onClose}
                 display={{ base: 'none', md: 'block' }}

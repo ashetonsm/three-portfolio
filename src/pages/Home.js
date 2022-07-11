@@ -1,18 +1,29 @@
-import { Canvas, extend } from "@react-three/fiber"
-import { useState } from "react";
+import { Canvas, extend, useThree } from "@react-three/fiber"
+import { useEffect, useState } from "react"
+import { Container, Button } from '@chakra-ui/react'
 import Phone from '../components/models/Phone'
 import Keyboard from '../components/models/Keyboard'
 import Pen from '../components/models/Pen'
 
-extend({ Phone, Keyboard, Pen})
+extend({ Phone, Keyboard, Pen })
 
 export const Home = ({ props }) => {
 
-    const [allItems, setAllItems] = useState([
-        { name: 'Phone', position: [0, 0, 0]},
-        { name: 'Keyboard', position: [2, 0, 0]},
-        { name: 'Pen', position: [4, 0, 0]},
-    ]);
+    function getWindowDimensions() {
+        const { innerWidth: width, innerHeight: height } = window
+        return {
+            width,
+            height
+        };
+    }
+
+    const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+
+    const allItems = [
+        { name: 'Pen', position: [-(windowDimensions.width - (windowDimensions.width + 1) * 1.003), 0, -1] },
+        { name: 'Phone', position: [0, 0, -1] },
+        { name: 'Keyboard', position: [(windowDimensions.width - (windowDimensions.width + 1) * 1.003), 0, -1] },
+    ]
 
     const [activeItem, setActiveItem] = useState({})
 
@@ -32,16 +43,56 @@ export const Home = ({ props }) => {
     const removeActive = (objList) => {
         objList.forEach(mesh => {
             mesh.children[0].makeInactive()
-            mesh.position.set(mesh.position.x, 0, 0)
+            mesh.position.set(mesh.position.x, 0, -1)
         });
     }
 
+    const goToLink = (destination) => {
+        window.open(destination)
+    }
+
+    useEffect(() => {
+        function handleResize() {
+            setWindowDimensions(getWindowDimensions());
+        }
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     return (
         <>
-        <div>
-            {activeItem.name !== undefined ? activeItem.name : "Choose Your Weapon"}
-        </div>
-            <Canvas tabIndex={0} >
+            <Container centerContent>
+                <div>
+                    {activeItem.name !== undefined ?
+
+                        activeItem.name === "Keyboard" ? <Button
+                            colorScheme='yellow'
+                            variant='solid'
+                            onClick={(e) => { goToLink(e.target.value) }}
+                            value="https://github.com/ashetonsm">
+                            GITHUB
+                        </Button> :
+                        activeItem.name === "Pen" ? <Button
+                            colorScheme='yellow'
+                            variant='solid'
+                            onClick={(e) => { goToLink(e.target.value) }}
+                            value="https://www.artstation.com/ashetonsm">
+                            ARTSTATION
+                        </Button> :
+                        activeItem.name === "Phone" ? <Button
+                            colorScheme='yellow'
+                            variant='solid'
+                            onClick={(e) => { goToLink(e.target.value) }}
+                            value="/contact">
+                            CONTACT
+                        </Button> :
+
+                        activeItem.name : <Button disabled>Please choose an option:</Button>}
+                </div>
+            </Container>
+
+            <Canvas style={{ height: 500 }} tabIndex={0} >
                 <ambientLight intensity={0.5} />
                 <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
                 <pointLight position={[-10, -10, -10]} />
@@ -50,24 +101,17 @@ export const Home = ({ props }) => {
                     item.name === "Keyboard" ?
                         <Keyboard key={item.name} position={item.position} onActive={makeActive} name={item.name} /> :
 
-                    item.name === "Pen" ?
-                        <Pen key={item.name} position={item.position} onActive={makeActive} name={item.name} /> :
+                        item.name === "Pen" ?
+                            <Pen key={item.name} position={item.position} onActive={makeActive} name={item.name} /> :
 
-                    item.name === "Phone" ?
-                        <Phone key={item.name} position={item.position} onActive={makeActive} name={item.name} /> :
-                        null
+                            item.name === "Phone" ?
+                                <Phone key={item.name} position={item.position} onActive={makeActive} name={item.name} /> :
+
+                                null
                 ))}
             </Canvas>
 
-            <div>
-                {activeItem.name !== undefined ? 
-                
-                activeItem.name === "Keyboard" ? "This is where I put my keyboards." :
-                activeItem.name === "Pen" ? "This is where I put my pens." :
-                activeItem.name === "Phone" ? "This is where I put my phones." :
-                
-                activeItem.name : ""}
-            </div>
+
         </>
     )
 }
