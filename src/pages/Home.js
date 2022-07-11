@@ -9,21 +9,19 @@ extend({ Phone, Keyboard, Pen})
 export const Home = ({ props }) => {
 
     const [allItems, setAllItems] = useState([
-        { name: 'Phone', position: [0, 0, 0], color: '#ff82d9' },
-        { name: 'Keyboard', position: [2, 0, 0], color: '#00ff0d' },
-        { name: 'Pen', position: [4, 0, 0], color: '#0051ff' },
+        { name: 'Phone', position: [0, 0, 0]},
+        { name: 'Keyboard', position: [2, 0, 0]},
+        { name: 'Pen', position: [4, 0, 0]},
     ]);
 
     const [activeItem, setActiveItem] = useState({})
 
     const makeActive = (obj) => {
-        // The Group that this Object is nested in
+        // The Group that this Mesh is nested in. obj.children[0] would be the mesh.
         setActiveItem(obj.parent)
 
         // The parent of this group (the canvas)
         //console.log(obj.parent.parent.children)
-
-        //console.log(obj.parent)
 
         // Find the meshes that need to be marked inactive
         // Compare the group UUIDs
@@ -32,13 +30,9 @@ export const Home = ({ props }) => {
     }
 
     const removeActive = (objList) => {
-        let increment = 2;
         objList.forEach(mesh => {
-            //console.log(mesh.children[0])
             mesh.children[0].makeInactive()
-            //mesh.children[0].position.set(increment, 0, 0)
-            mesh.position.set(increment, 0, 0)
-            increment = increment + 2
+            mesh.position.set(mesh.position.x, 0, 0)
         });
     }
 
@@ -54,19 +48,26 @@ export const Home = ({ props }) => {
 
                 {allItems.map((item) => (
                     item.name === "Keyboard" ?
-                        <Keyboard key={item.name} position={item.position} color={item.color} onActive={makeActive} name={item.name} /> :
+                        <Keyboard key={item.name} position={item.position} onActive={makeActive} name={item.name} /> :
 
                     item.name === "Pen" ?
-                        <Pen key={item.name} position={item.position} color={item.color} onActive={makeActive} name={item.name} /> :
+                        <Pen key={item.name} position={item.position} onActive={makeActive} name={item.name} /> :
 
                     item.name === "Phone" ?
-                        <Phone key={item.name} position={item.position} color={item.color} onActive={makeActive} name={item.name} /> :
-
+                        <Phone key={item.name} position={item.position} onActive={makeActive} name={item.name} /> :
                         null
-                    
                 ))}
-                
             </Canvas>
+
+            <div>
+                {activeItem.name !== undefined ? 
+                
+                activeItem.name === "Keyboard" ? "This is where I put my keyboards." :
+                activeItem.name === "Pen" ? "This is where I put my pens." :
+                activeItem.name === "Phone" ? "This is where I put my phones." :
+                
+                activeItem.name : ""}
+            </div>
         </>
     )
 }
