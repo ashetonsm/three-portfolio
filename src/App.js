@@ -1,7 +1,7 @@
-import './App.css';
-import { Home } from './pages/Home';
+import './App.css'
+import { Home } from './pages/Home'
 import { ChakraProvider } from '@chakra-ui/react'
-import SidebarWithHeader from './components/UI/Sidebar.tsx';
+import SidebarWithHeader from './components/UI/Sidebar.tsx'
 import {
   BrowserRouter,
   Routes,
@@ -19,7 +19,7 @@ function App() {
           </SidebarWithHeader>
 
           <Routes>
-            <Route path="/test" element={<div>Hello world</div>} />
+            <Route path="/test" element={<div>Hell, world!</div>} />
           </Routes>
 
         </ChakraProvider>
