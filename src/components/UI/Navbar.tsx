@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useState, useEffect } from 'react';
 import {
     Box,
     Flex,
@@ -10,6 +10,7 @@ import {
     Stack,
     Button,
     useColorMode,
+    Progress,
 } from '@chakra-ui/react';
 import { FiMenu, FiMoon, FiSun, FiX } from 'react-icons/fi'
 import React from 'react';
@@ -31,12 +32,35 @@ const NavLink = ({ children }: { children: ReactNode }) => (
 );
 
 export default function Navbar({ children }: { children: ReactNode }) {
+    const [width, setWidth] = useState(0)
+
     const { colorMode, toggleColorMode } = useColorMode();
     const { isOpen, onOpen, onClose } = useDisclosure();
 
+    const scrollHeight = () => {
+    
+        var el = document.documentElement,
+        ScrollTop = el.scrollTop || document.body.scrollTop,
+        ScrollHeight = el.scrollHeight || document.body.scrollHeight;
+    
+        var percent = (ScrollTop / (ScrollHeight - el.clientHeight)) * 100;
+        setWidth(percent)
+        return (percent)
+    }
+    
+    useEffect(() => {
+        window.addEventListener("scroll", scrollHeight)
+      
+        return () => {
+          window.removeEventListener("scroll", scrollHeight)
+        }
+      })
+
+
     return (
         <>
-            <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+            <Box width="100%" position='sticky' top={0} bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+            <Progress hasStripe value={width}  />
                 <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
                     <IconButton
                         size={'md'}
