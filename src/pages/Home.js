@@ -4,6 +4,8 @@ import { Container, Button } from '@chakra-ui/react'
 import Phone from '../components/models/Phone'
 import Keyboard from '../components/models/Keyboard'
 import Pen from '../components/models/Pen'
+import SplitWithImage from "../components/UI/Feature.tsx"
+import { FiTerminal, FiBox, FiPenTool } from 'react-icons/fi'
 
 extend({ Phone, Keyboard, Pen })
 
@@ -23,6 +25,12 @@ export const Home = ({ props }) => {
         { name: 'Pen', position: [-(windowDimensions.width - (windowDimensions.width + 1) * 1.003), 0, -1] },
         { name: 'Phone', position: [0, 0, -1] },
         { name: 'Keyboard', position: [(windowDimensions.width - (windowDimensions.width + 1) * 1.003), 0, -1] },
+    ]
+
+    const featureList = [ 
+        {text: '3D Art', icon: FiBox}, 
+        {text: 'Programming', icon: FiTerminal}, 
+        {text: 'Pattern Illustration', icon: FiPenTool}
     ]
 
     const [activeItem, setActiveItem] = useState({})
@@ -62,6 +70,10 @@ export const Home = ({ props }) => {
 
     return (
         <>
+        <Container maxW='container.sm' centerContent>
+            <SplitWithImage header="Hi, I'm Asheton" subHeader="I do many things:" imgUrl="https://placekitten.com/500/400" features={featureList}/>
+        </Container>
+
             <Container centerContent>
                 <div>
                     {activeItem.name !== undefined ?
@@ -84,7 +96,7 @@ export const Home = ({ props }) => {
                             colorScheme='yellow'
                             variant='solid'
                             onClick={(e) => { goToLink(e.target.value) }}
-                            value="/contact">
+                            value="/">
                             CONTACT
                         </Button> :
 
