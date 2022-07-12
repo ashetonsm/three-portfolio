@@ -1,12 +1,9 @@
 import { Canvas, extend, useThree } from "@react-three/fiber"
 import { useEffect, useState } from "react"
-import { Container, Button } from '@chakra-ui/react'
 import Phone from '../components/models/Phone'
 import Keyboard from '../components/models/Keyboard'
 import Pen from '../components/models/Pen'
-import SplitWithImage from "../components/UI/Feature.tsx"
 import { FiTerminal, FiBox, FiPenTool } from 'react-icons/fi'
-import CaptionCarousel from "../components/UI/Carousel.js"
 
 extend({ Phone, Keyboard, Pen })
 
@@ -28,10 +25,10 @@ export const Home = ({ props }) => {
         { name: 'Keyboard', position: [(windowDimensions.width - (windowDimensions.width + 1) * 1.003), 0, -1] },
     ]
 
-    const featureList = [
-        { text: '3D Art', icon: FiBox },
-        { text: 'Programming', icon: FiTerminal },
-        { text: 'Pattern Illustration', icon: FiPenTool }
+    const featureList = [ 
+        {text: '3D Art', icon: FiBox}, 
+        {text: 'Programming', icon: FiTerminal}, 
+        {text: 'Pattern Illustration', icon: FiPenTool}
     ]
 
     const [activeItem, setActiveItem] = useState({})
@@ -71,39 +68,33 @@ export const Home = ({ props }) => {
 
     return (
         <>
-            <Container maxW='container.sm' centerContent>
-                <SplitWithImage header="Hi, I'm Asheton" subHeader="I do many things:" imgUrl="https://placekitten.com/500/400" features={featureList} />
-            </Container>
-
-            <Container centerContent>
                 <div>
                     {activeItem.name !== undefined ?
 
-                        activeItem.name === "Keyboard" ? <Button
+                        activeItem.name === "Keyboard" ? <a
                             colorScheme='yellow'
                             variant='solid'
                             onClick={(e) => { goToLink(e.target.value) }}
                             value="https://github.com/ashetonsm">
                             GITHUB
-                        </Button> :
-                            activeItem.name === "Pen" ? <Button
-                                colorScheme='yellow'
-                                variant='solid'
-                                onClick={(e) => { goToLink(e.target.value) }}
-                                value="https://www.artstation.com/ashetonsm">
-                                ARTSTATION
-                            </Button> :
-                                activeItem.name === "Phone" ? <Button
-                                    colorScheme='yellow'
-                                    variant='solid'
-                                    onClick={(e) => { goToLink(e.target.value) }}
-                                    value="/">
-                                    CONTACT
-                                </Button> :
+                        </a> :
+                        activeItem.name === "Pen" ? <a
+                            colorScheme='yellow'
+                            variant='solid'
+                            onClick={(e) => { goToLink(e.target.value) }}
+                            value="https://www.artstation.com/ashetonsm">
+                            ARTSTATION
+                        </a> :
+                        activeItem.name === "Phone" ? <a
+                            colorScheme='yellow'
+                            variant='solid'
+                            onClick={(e) => { goToLink(e.target.value) }}
+                            value="/">
+                            CONTACT
+                        </a> :
 
-                                    activeItem.name : <Button disabled>Please choose an option:</Button>}
+                        activeItem.name : <a disabled>Please choose an option:</a>}
                 </div>
-            </Container>
 
             <Canvas style={{ height: 500 }} tabIndex={0} >
                 <ambientLight intensity={0.5} />
@@ -123,10 +114,6 @@ export const Home = ({ props }) => {
                                 null
                 ))}
             </Canvas>
-            <Container maxW='container.sm' centerContent>
-                <CaptionCarousel></CaptionCarousel>
-            </Container>
-
         </>
     )
 }
