@@ -6,6 +6,7 @@ import Keyboard from '../components/models/Keyboard'
 import Pen from '../components/models/Pen'
 import SplitWithImage from "../components/UI/Feature.tsx"
 import { FiTerminal, FiBox, FiPenTool } from 'react-icons/fi'
+import CaptionCarousel from "../components/UI/Carousel.js"
 
 extend({ Phone, Keyboard, Pen })
 
@@ -27,10 +28,10 @@ export const Home = ({ props }) => {
         { name: 'Keyboard', position: [(windowDimensions.width - (windowDimensions.width + 1) * 1.003), 0, -1] },
     ]
 
-    const featureList = [ 
-        {text: '3D Art', icon: FiBox}, 
-        {text: 'Programming', icon: FiTerminal}, 
-        {text: 'Pattern Illustration', icon: FiPenTool}
+    const featureList = [
+        { text: '3D Art', icon: FiBox },
+        { text: 'Programming', icon: FiTerminal },
+        { text: 'Pattern Illustration', icon: FiPenTool }
     ]
 
     const [activeItem, setActiveItem] = useState({})
@@ -70,9 +71,9 @@ export const Home = ({ props }) => {
 
     return (
         <>
-        <Container maxW='container.sm' centerContent>
-            <SplitWithImage header="Hi, I'm Asheton" subHeader="I do many things:" imgUrl="https://placekitten.com/500/400" features={featureList}/>
-        </Container>
+            <Container maxW='container.sm' centerContent>
+                <SplitWithImage header="Hi, I'm Asheton" subHeader="I do many things:" imgUrl="https://placekitten.com/500/400" features={featureList} />
+            </Container>
 
             <Container centerContent>
                 <div>
@@ -85,22 +86,22 @@ export const Home = ({ props }) => {
                             value="https://github.com/ashetonsm">
                             GITHUB
                         </Button> :
-                        activeItem.name === "Pen" ? <Button
-                            colorScheme='yellow'
-                            variant='solid'
-                            onClick={(e) => { goToLink(e.target.value) }}
-                            value="https://www.artstation.com/ashetonsm">
-                            ARTSTATION
-                        </Button> :
-                        activeItem.name === "Phone" ? <Button
-                            colorScheme='yellow'
-                            variant='solid'
-                            onClick={(e) => { goToLink(e.target.value) }}
-                            value="/">
-                            CONTACT
-                        </Button> :
+                            activeItem.name === "Pen" ? <Button
+                                colorScheme='yellow'
+                                variant='solid'
+                                onClick={(e) => { goToLink(e.target.value) }}
+                                value="https://www.artstation.com/ashetonsm">
+                                ARTSTATION
+                            </Button> :
+                                activeItem.name === "Phone" ? <Button
+                                    colorScheme='yellow'
+                                    variant='solid'
+                                    onClick={(e) => { goToLink(e.target.value) }}
+                                    value="/">
+                                    CONTACT
+                                </Button> :
 
-                        activeItem.name : <Button disabled>Please choose an option:</Button>}
+                                    activeItem.name : <Button disabled>Please choose an option:</Button>}
                 </div>
             </Container>
 
@@ -122,7 +123,9 @@ export const Home = ({ props }) => {
                                 null
                 ))}
             </Canvas>
-
+            <Container maxW='container.sm' centerContent>
+                <CaptionCarousel></CaptionCarousel>
+            </Container>
 
         </>
     )
