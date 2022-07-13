@@ -1,6 +1,7 @@
 import { useState, useRef } from "react"
 import { useFrame } from '@react-three/fiber'
 import { useSpring, animated, config } from "@react-spring/three"
+import { Select } from "@react-three/postprocessing"
 
 export const Box = (props) => {
 
@@ -9,14 +10,12 @@ export const Box = (props) => {
     const [active, setActive] = useState(false)
 
     const handleClick = (obj) => {
-        console.log(scale)
-        setActive(true)
-        obj.position.set(0, 0, 0)
-        props.onActive(obj)
-    }
-
-    const makeInactive = () => {
-        setActive(false)
+        if (!active === false) {
+            props.onInactive()
+        } else {
+            props.onActive(obj)
+        }
+        setActive(!active)
     }
 
     const { scale } = useSpring({
@@ -25,18 +24,21 @@ export const Box = (props) => {
       });
 
     return (
+        <Select enabled={hovered || active}>
+
         <animated.mesh
             {...props}
             ref={ref}
             scale={scale}
-            makeInactive={(event) => makeInactive()}
             onClick={(event) => handleClick(event.object)}
             onPointerOver={(event) => hover(true)}
             onPointerOut={(event) => hover(false)}
             >
             <boxGeometry args={[1, 1, 1]} />
-            <meshStandardMaterial color={hovered && !active ? '#ffffff' : props.color} />
+            <meshStandardMaterial color={hovered || active ? props.color : '#ffffff' } />
         </animated.mesh>
+        </Select>
+
     )
 
 }
