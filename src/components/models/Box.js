@@ -7,9 +7,6 @@ export const Box = (props) => {
     const ref = useRef()
     const [hovered, hover] = useState(false)
     const [active, setActive] = useState(false)
-    
-    // Subscribe this component to the render-loop, rotate the mesh every frame
-    useFrame((state, delta) => (ref.current.rotation.x += 0.01))
 
     const handleClick = (obj) => {
         console.log(scale)

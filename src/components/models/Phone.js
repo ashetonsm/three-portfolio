@@ -15,8 +15,6 @@ export default function Model({ ...props }) {
     const { viewport } = useThree()
     const { nodes, materials } = useGLTF("models/Phone.gltf")
 
-    useFrame((state, delta) => (group.current.rotation.y += 0.01))
-
     const handleClick = (obj) => {
         setActive(true)
         obj.parent.position.set(obj.parent.position.x, (viewport.height / 20) * 2, 0)
