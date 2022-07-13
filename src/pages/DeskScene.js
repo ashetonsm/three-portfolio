@@ -1,16 +1,28 @@
-import { Box } from "@react-three/drei"
+import { Box } from '../components/models/Box'
 import { Canvas, extend, useThree, useFrame } from "@react-three/fiber"
-import { useRef } from "react"
-import { Selection, Select, EffectComposer, Outline } from '@react-three/postprocessing'
+import { useRef, useState } from "react"
+import { Selection, EffectComposer, Outline } from '@react-three/postprocessing'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import Desk from '../components/models/Desk'
+import { Text3D } from '../components/models/Text3D'
 
 extend({ OrbitControls })
 
 export const DeskScene = ({ props }) => {
+
+    const [activeItem, setActiveItem] = useState({})
+
+    const makeActive = (obj) => {
+        setActiveItem(obj)
+        console.log(obj)
+    }
+
+    const removeActive = () => {
+        setActiveItem({})
+    }
+
+
     const CameraControls = () => {
-        // Get a reference to the Three.js Camera, and the canvas html element.
-        // We need these to setup the OrbitControls component.
         // https://threejs.org/docs/#examples/en/controls/OrbitControls
         const {
             camera,
@@ -19,7 +31,6 @@ export const DeskScene = ({ props }) => {
 
         camera.setFocalLength(22.5)
         // console.log(camera)
-        // Ref to the controls, so that we can update them on every frame using useFrame
         const controls = useRef();
         useFrame((state) => controls.current.update());
         return <orbitControls
@@ -36,10 +47,13 @@ export const DeskScene = ({ props }) => {
             <pointLight position={[-10, -10, -10]} />
             <Selection>
                 <EffectComposer multisampling={8} autoClear={false}>
-                    <Outline blur visibleEdgeColor="red" edgeStrength={100} width={500} />
+                    <Outline blur visibleEdgeColor="red" edgeStrength={100} width={2000} />
                 </EffectComposer>
                 <Desk />
+                <Box position={[2, 0, 0]} color={'lightblue'} onActive={makeActive} onInactive={removeActive} name="Debug Box" />
             </Selection>
+
+            <Text3D>{activeItem.name}</Text3D>
         </Canvas>
     )
 }
