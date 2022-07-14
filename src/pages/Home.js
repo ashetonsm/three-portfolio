@@ -1,4 +1,4 @@
-import { Canvas, extend, useThree, useFrame, useLoader } from "@react-three/fiber"
+/* import { Canvas, extend, useThree, useFrame, useLoader } from "@react-three/fiber"
 import { useEffect, useState, useRef } from "react"
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import Phone from '../components/models/Phone'
@@ -126,4 +126,4 @@ export const Home = ({ props }) => {
             </Canvas>
         </>
     )
-}
+} */
