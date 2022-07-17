@@ -5,10 +5,32 @@ import { Select } from '@react-three/postprocessing'
 export default function Model({ ...props }) {
 
     const [hovered, hover] = useState(null)
+    const [active, setActive] = useState(false)
+
     const group = useRef();
 
     const { nodes, materials } = useGLTF("models/PortfolioObjects.gltf");
 
+    const handleClick = (obj) => {
+        if (!active === false) {
+            props.onInactive()
+        } else {
+            props.onActive(obj)
+        }
+        setActive(!active)
+    }
+
+    const hovering = (obj) => {
+        hover(true)
+        props.onHover(obj)
+    }
+
+    const notHovering = (obj) => {
+        if (!active) {
+            hover(false)
+        }
+        props.onExitHover(obj)
+    }
     return (
         <group ref={group} {...props} dispose={null} >
 
@@ -19,8 +41,9 @@ export default function Model({ ...props }) {
                     geometry={nodes.Tower.geometry}
                     material={materials.Computer}
                     position={[0.33, -0.04, 0]}
-                    onPointerOver={() => hover(true)}
-                    onPointerOut={() => hover(false)}
+                    onPointerOver={(event) => hovering(event.object.parent.parent)}
+                    onPointerOut={(event) => notHovering()}
+                    onClick={(event) => handleClick(event.object.parent.parent)}
                 >
                     <mesh
                         castShadow
