@@ -6,10 +6,8 @@ export default function Model({ ...props }) {
 
   const [hovered, hover] = useState(null)
   const [active, setActive] = useState(false)
-
   const group = useRef();
-
-  const { nodes, materials } = useGLTF("models/PortfolioObjects.gltf");
+  const { nodes, materials } = useGLTF("models/Desk.gltf");
 
   const handleClick = (obj) => {
     if (!active === false) {
@@ -25,83 +23,31 @@ export default function Model({ ...props }) {
     props.onHover(obj)
   }
 
-  const notHovering = (obj) => {
+  const notHovering = () => {
     if (!active) {
       hover(false)
     }
-    props.onExitHover(obj)
+    props.onExitHover()
   }
 
   return (
-    <group ref={group} {...props} dispose={null} name="Debug Desk" >
-
-      <Select enabled={hovered}>
-
+    <Select enabled={hovered}>
+      <group
+        ref={group}
+        {...props}
+        dispose={null}
+        onPointerOver={(event) => hovering(event.object.parent)}
+        onPointerOut={(event) => notHovering()}
+        onClick={(event) => handleClick(event.object.parent)}>
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Table_Top.geometry}
-          material={materials.Wood}
-          onPointerOver={(event) => hovering(event.object.parent.parent)}
-          onPointerOut={(event) => notHovering()}
-          onClick={(event) => handleClick(event.object.parent.parent)}
-        >
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.All_Legs.geometry}
-            material={materials.Wood}
-          >
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes.SupportsL.geometry}
-              material={materials.Wood}
-              position={[0.29, 0, 0]}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes.SupportsR.geometry}
-              material={materials.Wood}
-              position={[-0.48, -0.27, 0]}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes.Tray1L.geometry}
-              material={materials.Wood}
-              position={[0.33, -0.27, 0]}
-            />
-          </mesh>
-
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Desk_Rim.geometry}
-            material={materials.Wood}
-            position={[0, 0.38, -0.22]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.SupportBack.geometry}
-            material={materials.Wood}
-            position={[-0.15, -0.27, -0.21]}
-            rotation={[0, 1.57, 0]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Tray2R.geometry}
-            material={materials.Wood}
-            position={[-0.35, -0.23, -0.08]}
-            rotation={[0, -Math.PI / 4, 0]}
-          />
-        </mesh>
-      </Select>
-    </group>
-  )
+          geometry={nodes.Desk.geometry}
+          material={materials.DeskWood}
+        />
+      </group>
+    </Select>
+  );
 }
 
-useGLTF.preload("/PortfolioObjects.gltf");
+useGLTF.preload("/Desk.gltf");
