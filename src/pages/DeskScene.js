@@ -41,7 +41,6 @@ export const DeskScene = ({ props }) => {
         } = useThree();
 
         camera.setFocalLength(22.5)
-        console.log(camera)
         const controls = useRef();
         useFrame((state) => controls.current.update());
         return <orbitControls
@@ -59,26 +58,42 @@ export const DeskScene = ({ props }) => {
             <Selection>
                 <EffectComposer multisampling={8} autoClear={false}>
                     <Outline blur
-                    visibleEdgeColor="#00c5d0" 
-                    edgeStrength={50} 
-                    width={2500} />
+                        visibleEdgeColor="#00c5d0"
+                        edgeStrength={50}
+                        width={2500} />
                 </EffectComposer>
                 <Desk
                     onActive={makeActive}
                     onInactive={removeActive}
                     onHover={setText}
-                    onExitHover={removeText} />
-                <Computer onActive={makeActive} onInactive={removeActive} name="Debug Computer" />
-                <BigMonitor onActive={makeActive} onInactive={removeActive} name="Debug BigMonitor" />
-                <SmallMonitor onActive={makeActive} onInactive={removeActive} name="Debug SmallMonitor" />
-                <Box
+                    onExitHover={removeText}
+                    name="Debug Desk" />
+                <Computer
+                    onActive={makeActive}
+                    onInactive={removeActive}
+                    onHover={setText}
+                    onExitHover={removeText}
+                    name="Debug Computer" />
+                <BigMonitor
+                    onActive={makeActive}
+                    onInactive={removeActive}
+                    onHover={setText}
+                    onExitHover={removeText}
+                    name="Debug BigMonitor" />
+                <SmallMonitor
+                    onActive={makeActive}
+                    onInactive={removeActive}
+                    onHover={setText}
+                    onExitHover={removeText}
+                    name="Debug SmallMonitor" />
+                {/* <Box
                     position={[1, 0, 0]}
                     color={'lightblue'}
                     onActive={makeActive}
                     onInactive={removeActive}
                     onHover={setText}
                     onExitHover={removeText}
-                    name="Debug Box" />
+                    name="Debug Box" /> */}
             </Selection>
 
             <Text3D>
