@@ -29,7 +29,7 @@ export const DeskScene = ({ props }) => {
         setHoveredItem(obj)
     }
 
-    const removeText = (obj) => {
+    const removeText = () => {
         setHoveredItem(null)
     }
 
