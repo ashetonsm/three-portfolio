@@ -39,6 +39,7 @@ export default function Model({ ...props }) {
         onPointerOver={(event) => hovering(event.object.parent)}
         onPointerOut={(event) => notHovering()}
         onClick={(event) => handleClick(event.object.parent)}>
+
         <mesh
           castShadow
           receiveShadow

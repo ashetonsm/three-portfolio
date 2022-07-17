@@ -1,4 +1,3 @@
-import { Box } from '../components/models/Box'
 import { Canvas, extend, useThree, useFrame } from "@react-three/fiber"
 import { useRef, useState } from "react"
 import { Selection, EffectComposer, Outline } from '@react-three/postprocessing'
@@ -7,6 +6,9 @@ import Desk from '../components/models/Desk'
 import Computer from '../components/models/Computer'
 import BigMonitor from '../components/models/BigMonitor'
 import SmallMonitor from '../components/models/SmallMonitor'
+import Chair from '../components/models/Chair'
+import Keyboard from '../components/models/Keyboard'
+import Tablet from '../components/models/Tablet'
 import { Text3D } from '../components/models/Text3D'
 
 extend({ OrbitControls })
@@ -56,12 +58,14 @@ export const DeskScene = ({ props }) => {
             <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
             <pointLight position={[-10, -10, -10]} />
             <Selection>
+                
                 <EffectComposer multisampling={8} autoClear={false}>
                     <Outline blur
                         visibleEdgeColor="#00c5d0"
                         edgeStrength={50}
                         width={2500} />
                 </EffectComposer>
+
                 <Desk
                     onActive={makeActive}
                     onInactive={removeActive}
@@ -86,14 +90,24 @@ export const DeskScene = ({ props }) => {
                     onHover={setText}
                     onExitHover={removeText}
                     name="Debug SmallMonitor" />
-                {/* <Box
-                    position={[1, 0, 0]}
-                    color={'lightblue'}
+                <Chair
                     onActive={makeActive}
                     onInactive={removeActive}
                     onHover={setText}
                     onExitHover={removeText}
-                    name="Debug Box" /> */}
+                    name="Debug Chair" />
+                <Keyboard
+                    onActive={makeActive}
+                    onInactive={removeActive}
+                    onHover={setText}
+                    onExitHover={removeText}
+                    name="Debug Keyboard" />
+                <Tablet
+                    onActive={makeActive}
+                    onInactive={removeActive}
+                    onHover={setText}
+                    onExitHover={removeText}
+                    name="Debug Tablet" />
             </Selection>
 
             <Text3D>

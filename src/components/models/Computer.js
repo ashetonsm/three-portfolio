@@ -6,10 +6,8 @@ export default function Model({ ...props }) {
 
     const [hovered, hover] = useState(null)
     const [active, setActive] = useState(false)
-
     const group = useRef();
-
-    const { nodes, materials } = useGLTF("models/PortfolioObjects.gltf");
+    const { nodes, materials } = useGLTF("models/ComputerTower.gltf");
 
     const handleClick = (obj) => {
         if (!active === false) {
@@ -25,48 +23,34 @@ export default function Model({ ...props }) {
         props.onHover(obj)
     }
 
-    const notHovering = (obj) => {
+    const notHovering = () => {
         if (!active) {
             hover(false)
         }
-        props.onExitHover(obj)
+        props.onExitHover()
     }
     return (
-        <group ref={group} {...props} dispose={null} >
+        <Select enabled={hovered}>
 
-            <Select enabled={hovered}>
+            <group
+                ref={group}
+                {...props}
+                dispose={null}
+                onPointerOver={(event) => hovering(event.object.parent)}
+                onPointerOut={(event) => notHovering()}
+                onClick={(event) => handleClick(event.object.parent)} >
+
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Tower.geometry}
+                    geometry={nodes.Computer_Tower.geometry}
                     material={materials.Computer}
                     position={[0.33, -0.04, 0]}
-                    onPointerOver={(event) => hovering(event.object.parent.parent)}
-                    onPointerOut={(event) => notHovering()}
-                    onClick={(event) => handleClick(event.object.parent.parent)}
-                >
-                    <mesh
-                        castShadow
-                        receiveShadow
-                        geometry={nodes.Mesh_grate.geometry}
-                        material={materials["Mesh Panel"]}
-                    />
-                    <mesh
-                        castShadow
-                        receiveShadow
-                        geometry={nodes.Cube011.geometry}
-                        material={materials["Front Panels"]}
-                    />
-                    <mesh
-                        castShadow
-                        receiveShadow
-                        geometry={nodes.Cube011_1.geometry}
-                        material={materials["Mesh Panel"]}
-                    />
-                </mesh>
-            </Select>
-        </group>)
+                />
+            </group>
+        </Select>
+    )
 
 }
 
-useGLTF.preload("/PortfolioObjects.gltf");
+useGLTF.preload("/ComputerTower.gltf");

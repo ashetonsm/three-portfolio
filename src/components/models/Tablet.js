@@ -5,17 +5,52 @@ import { Select } from '@react-three/postprocessing'
 export default function Model({ ...props }) {
 
     const [hovered, hover] = useState(null)
+    const [active, setActive] = useState(false)
     const group = useRef();
-    console.log(hovered);
+    const { nodes, materials } = useGLTF("models/Tablet.gltf");
 
-    const { nodes, materials } = useGLTF("models/PortfolioObjects.gltf");
+    const handleClick = (obj) => {
+        if (!active === false) {
+            props.onInactive()
+        } else {
+            props.onActive(obj)
+        }
+        setActive(!active)
+    }
 
+    const hovering = (obj) => {
+        hover(true)
+        props.onHover(obj)
+    }
+
+    const notHovering = () => {
+        if (!active) {
+            hover(false)
+        }
+        props.onExitHover()
+    }
     return (
-        <group ref={group} {...props} dispose={null} >
+        <Select enabled={hovered}>
 
-</group>
-            )
+            <group
+                ref={group}
+                {...props}
+                dispose={null}
+                onPointerOver={(event) => hovering(event.object.parent)}
+                onPointerOut={(event) => notHovering()}
+                onClick={(event) => handleClick(event.object.parent)} >
+
+                <mesh
+                    castShadow
+                    receiveShadow
+                    geometry={nodes.Tablet.geometry}
+                    material={materials.Tablet}
+                    position={[0.38, 0.41, 0.01]}
+                />
+            </group>
+        </Select>
+    )
 
 }
 
-            useGLTF.preload("/PortfolioObjects.gltf");
+useGLTF.preload("/Tablet.gltf");
