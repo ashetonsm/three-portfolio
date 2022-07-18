@@ -1,11 +1,13 @@
-import { Canvas, extend, useThree } from "@react-three/fiber"
-import { useEffect, useState } from "react"
-import { Container, Button } from '@chakra-ui/react'
+/* import { Canvas, extend, useThree, useFrame, useLoader } from "@react-three/fiber"
+import { useEffect, useState, useRef } from "react"
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import Phone from '../components/models/Phone'
 import Keyboard from '../components/models/Keyboard'
 import Pen from '../components/models/Pen'
+import { FiTerminal, FiBox, FiPenTool } from 'react-icons/fi'
+import { Text3D } from "../components/models/Text3D"
 
-extend({ Phone, Keyboard, Pen })
+extend({ Phone, Keyboard, Pen, OrbitControls })
 
 export const Home = ({ props }) => {
 
@@ -20,9 +22,15 @@ export const Home = ({ props }) => {
     const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
 
     const allItems = [
-        { name: 'Pen', position: [-(windowDimensions.width - (windowDimensions.width + 1) * 1.003), 0, -1] },
-        { name: 'Phone', position: [0, 0, -1] },
-        { name: 'Keyboard', position: [(windowDimensions.width - (windowDimensions.width + 1) * 1.003), 0, -1] },
+        { name: 'Pen', position: [-10, 0, 0] },
+        { name: 'Phone', position: [0, 0, 0] },
+        { name: 'Keyboard', position: [10, 0, 0] },
+    ]
+
+    const featureList = [ 
+        {text: '3D Art', icon: FiBox}, 
+        {text: 'Programming', icon: FiTerminal}, 
+        {text: 'Pattern Illustration', icon: FiPenTool}
     ]
 
     const [activeItem, setActiveItem] = useState({})
@@ -43,12 +51,8 @@ export const Home = ({ props }) => {
     const removeActive = (objList) => {
         objList.forEach(mesh => {
             mesh.children[0].makeInactive()
-            mesh.position.set(mesh.position.x, 0, -1)
+            mesh.position.set(mesh.position.x, 0, 0)
         });
-    }
-
-    const goToLink = (destination) => {
-        window.open(destination)
     }
 
     useEffect(() => {
@@ -60,39 +64,49 @@ export const Home = ({ props }) => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    const CameraControls = () => {
+        // Get a reference to the Three.js Camera, and the canvas html element.
+        // We need these to setup the OrbitControls component.
+        // https://threejs.org/docs/#examples/en/controls/OrbitControls
+        const {
+          camera,
+          gl: { domElement },
+        } = useThree();
+
+        console.log(camera)
+        // Ref to the controls, so that we can update them on every frame using useFrame
+        const controls = useRef();
+        useFrame((state) => controls.current.update());
+        return <orbitControls ref={controls} args={[camera, domElement]} />;
+      };
+
     return (
         <>
-            <Container centerContent>
                 <div>
                     {activeItem.name !== undefined ?
 
-                        activeItem.name === "Keyboard" ? <Button
-                            colorScheme='yellow'
-                            variant='solid'
-                            onClick={(e) => { goToLink(e.target.value) }}
-                            value="https://github.com/ashetonsm">
+                        activeItem.name === "Keyboard" ? <a 
+                            href="https://github.com/ashetonsm" target={'_blank'}  rel="noreferrer noopener">
                             GITHUB
-                        </Button> :
-                        activeItem.name === "Pen" ? <Button
-                            colorScheme='yellow'
-                            variant='solid'
-                            onClick={(e) => { goToLink(e.target.value) }}
-                            value="https://www.artstation.com/ashetonsm">
+                        </a> :
+                        activeItem.name === "Pen" ? <a 
+                            href="https://www.artstation.com/ashetonsm" target={'_blank'}  rel="noreferrer noopener">
                             ARTSTATION
-                        </Button> :
-                        activeItem.name === "Phone" ? <Button
-                            colorScheme='yellow'
-                            variant='solid'
-                            onClick={(e) => { goToLink(e.target.value) }}
-                            value="/contact">
+                        </a> :
+                        activeItem.name === "Phone" ? <a 
+                            href="/" target={'_blank'} rel="noreferrer noopener">
                             CONTACT
-                        </Button> :
+                        </a> :
 
-                        activeItem.name : <Button disabled>Please choose an option:</Button>}
+                        activeItem.name : <a disabled>Please choose an option:</a>}
                 </div>
-            </Container>
 
-            <Canvas style={{ height: 500 }} tabIndex={0} >
+                <div>
+                    <Text3D>This is a text that would be 3d looking</Text3D>
+                </div>
+
+            <Canvas style={{ height: 500 }} >
+                <CameraControls/>
                 <ambientLight intensity={0.5} />
                 <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
                 <pointLight position={[-10, -10, -10]} />
@@ -101,17 +115,15 @@ export const Home = ({ props }) => {
                     item.name === "Keyboard" ?
                         <Keyboard key={item.name} position={item.position} onActive={makeActive} name={item.name} /> :
 
-                        item.name === "Pen" ?
-                            <Pen key={item.name} position={item.position} onActive={makeActive} name={item.name} /> :
+                    item.name === "Pen" ?
+                        <Pen key={item.name} position={item.position} onActive={makeActive} name={item.name} /> :
 
-                            item.name === "Phone" ?
-                                <Phone key={item.name} position={item.position} onActive={makeActive} name={item.name} /> :
+                    item.name === "Phone" ?
+                        <Phone key={item.name} position={item.position} onActive={makeActive} name={item.name} /> :
 
-                                null
+                        null
                 ))}
             </Canvas>
-
-
         </>
     )
-}
+} */

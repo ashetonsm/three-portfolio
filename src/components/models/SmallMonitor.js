@@ -7,7 +7,7 @@ export default function Model({ ...props }) {
     const [hovered, hover] = useState(null)
     const [active, setActive] = useState(false)
     const group = useRef();
-    const { nodes, materials } = useGLTF("models/Keyboard.gltf");
+    const { nodes, materials } = useGLTF("models/SmallMonitor.gltf");
 
     const handleClick = (obj) => {
         if (!active === false) {
@@ -29,27 +29,27 @@ export default function Model({ ...props }) {
         }
         props.onExitHover()
     }
-
     return (
         <Select enabled={hovered}>
+
             <group
                 ref={group}
                 {...props}
                 dispose={null}
                 onPointerOver={(event) => hovering(event.object.parent)}
                 onPointerOut={(event) => notHovering()}
-                onClick={(event) => handleClick(event.object.parent)}>
+                onClick={(event) => handleClick(event.object.parent)} >
 
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Keyboard.geometry}
-                    material={materials.Keyboard}
-                    position={[-0.14, 0.4, 0.12]}
+                    geometry={nodes.Small_Monitor_Screen.geometry}
+                    material={materials["Small Monitor"]}
+                    position={[-0.03, 0, 0.06]}
                 />
             </group>
         </Select>
-    );
+    )
 }
 
-useGLTF.preload("/Keyboard.gltf");
+useGLTF.preload("/SmallMonitor.gltf");
