@@ -4,22 +4,28 @@ import { useRef, useState, useEffect } from "react"
 import { useCursor, Image, MeshReflectorMaterial, Text, Environment } from '@react-three/drei'
 import { Selection, EffectComposer, Outline } from '@react-three/postprocessing'
 import BigMonitor from '../components/models/BigMonitor'
+import SmallMonitor from '../components/models/SmallMonitor'
 import Keyboard from '../components/models/Keyboard'
 import Tablet from '../components/models/Tablet'
+import Desk from '../components/models/Desk'
+import Computer from '../components/models/Computer'
+import Chair from '../components/models/Chair'
+import {Text3D} from '../components/models/Text3D'
 import { useRoute, useLocation } from 'wouter'
 import getUuid from 'uuid-by-string'
 
-extend({ BigMonitor })
+extend({ BigMonitor, Keyboard, Tablet })
 
 export const DeskScene = ({ props }) => {
     const GOLDENRATIO = 1.61803398875
     const interatives = [
-        { model: BigMonitor, modelName: "BigMonitor" },
-        { model: Keyboard, modelName: "Keyboard" },
-        { model: Tablet, modelName: "Tablet" },
+        { model: BigMonitor, modelNum: "0", modelName: "BigMonitor"},
+        { model: SmallMonitor, modelNum: "1", modelName: "SmallMonitor"},
+        { model: Keyboard, modelNum: "2", modelName: "Keyboard" },
+        { model: Tablet, modelNum: "3", modelName: "Tablet" },
     ]
 
-    function Frames({ q = new THREE.Quaternion(), p = new THREE.Vector3() }) {
+    function Interactives({ q = new THREE.Quaternion(), p = new THREE.Vector3() }) {
         const ref = useRef()
         const clicked = useRef()
         const [, params] = useRoute('/item/:id')
@@ -28,11 +34,11 @@ export const DeskScene = ({ props }) => {
             clicked.current = ref.current.getObjectByName(params?.id)
             console.log(clicked.current)
             if (clicked.current) {
-                clicked.current.parent.updateWorldMatrix(true, true)
-                clicked.current.parent.localToWorld(p.set(0, GOLDENRATIO / 1.25, 1.5))
-                clicked.current.parent.getWorldQuaternion(q)
+                clicked.current.children[0].updateWorldMatrix(true, true)
+                clicked.current.children[0].localToWorld(p.set(0, GOLDENRATIO / 7, 0.5))
+                clicked.current.children[0].getWorldQuaternion(q)
             } else {
-                p.set(0, 1.25, 2)
+                p.set(0, 1.5, 2)
                 q.identity()
             }
         })
@@ -47,32 +53,57 @@ export const DeskScene = ({ props }) => {
                 onPointerMissed={() => setLocation('/')}>
                 {
                     interatives.map((props) =>
-                        <Frame key={props.modelName}  model={props.modelName} {...props} />
+                        <Interactive key={props.modelNum}  model={props.model} name={props.modelName} {...props} />
                     )}
             </group>
         )
     }
 
-    function Frame({ url, modelName, ...props }) {
+    function Interactive({ url, modelName, model, ...props }) {
         const [hovered, hover] = useState(false)
-        const [rnd] = useState(() => Math.random())
         const name = getUuid(modelName)
         useCursor(hovered)
         useFrame((state) => {
         })
         return (
             <group {...props}>
-                    <Tablet
-                        name={name}
-                        onPointerOver={(e) => (e.stopPropagation(), hover(true))}
-                        position={[0, GOLDENRATIO / 2, 1]}
-                        onPointerOut={() => hover(false)}
-                        raycast={() => null}
-                        scale={[1, 1, 1]}
-                        />
-                <Text maxWidth={0.1} anchorX="left" anchorY="top" position={[0.55, GOLDENRATIO, 0]} fontSize={0.025}>
-                    {name.split('-').join(' ')}
-                </Text>
+                {modelName === "Tablet" ? 
+                                    <Tablet
+                                    name={name}
+                                    onPointerOver={(e) => (e.stopPropagation(), hover(true))}
+                                    position={[0, GOLDENRATIO / 2, 1]}
+                                    onPointerOut={() => hover(false)}
+                                    scale={[1, 1, 1]}
+                                    /> : 
+                                    
+                modelName === "BigMonitor" ? 
+                                    <BigMonitor
+                                    name={name}
+                                    onPointerOver={(e) => (e.stopPropagation(), hover(true))}
+                                    position={[0, GOLDENRATIO / 2, 1]}
+                                    onPointerOut={() => hover(false)}
+                                    scale={[1, 1, 1]}
+                                    /> : 
+
+                modelName === "SmallMonitor" ? 
+                                    <SmallMonitor
+                                    name={name}
+                                    onPointerOver={(e) => (e.stopPropagation(), hover(true))}
+                                    position={[0, GOLDENRATIO / 2, 1]}
+                                    onPointerOut={() => hover(false)}
+                                    scale={[1, 1, 1]}
+                                    /> : 
+
+                modelName === "Keyboard" ? 
+                                    <Keyboard
+                                    name={name}
+                                    onPointerOver={(e) => (e.stopPropagation(), hover(true))}
+                                    position={[0, GOLDENRATIO / 2, 1]}
+                                    onPointerOut={() => hover(false)}
+                                    scale={[1, 1, 1]}
+                                    /> : 
+                                    
+                                    null}
             </group>
         )
     }
@@ -90,7 +121,17 @@ export const DeskScene = ({ props }) => {
                         width={2500} />
                 </EffectComposer>
             </Selection>
-            <Frames />
+
+            <Interactives />
+
+            <Desk
+            position={[0, GOLDENRATIO / 2, 1]}/>
+            <Computer
+            position={[0, GOLDENRATIO / 2, 1]}/>
+            <Chair
+            position={[0, GOLDENRATIO / 2, 1]}/>
+
+            <Text3D>Test Text</Text3D>
 
         </Canvas>
     )
