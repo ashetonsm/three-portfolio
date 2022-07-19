@@ -67,16 +67,8 @@ export const DeskScene = ({ props }) => {
                 </EffectComposer>
 
                 <Desk
-                    onActive={makeActive}
-                    onInactive={removeActive}
-                    onHover={setText}
-                    onExitHover={removeText}
                     name="Debug Desk" />
                 <Computer
-                    onActive={makeActive}
-                    onInactive={removeActive}
-                    onHover={setText}
-                    onExitHover={removeText}
                     name="Debug Computer" />
                 <BigMonitor
                     onActive={makeActive}
@@ -91,10 +83,6 @@ export const DeskScene = ({ props }) => {
                     onExitHover={removeText}
                     name="Debug SmallMonitor" />
                 <Chair
-                    onActive={makeActive}
-                    onInactive={removeActive}
-                    onHover={setText}
-                    onExitHover={removeText}
                     name="Debug Chair" />
                 <Keyboard
                     onActive={makeActive}

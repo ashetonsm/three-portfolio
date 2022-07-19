@@ -1,14 +1,12 @@
-import React, { useRef, useState } from "react";
-import { useGLTF } from "@react-three/drei";
-import { Select } from '@react-three/postprocessing'
+import React, { useRef, useState } from "react"
+import { useGLTF } from "@react-three/drei"
 
 export default function Model({ ...props }) {
 
-    const [hovered, hover] = useState(null)
-    const [active, setActive] = useState(false)
-    const group = useRef();
-    const { nodes, materials } = useGLTF("models/ComputerTower.gltf");
+    const group = useRef()
+    const { nodes, materials } = useGLTF("models/ComputerTower.gltf")
 
+    /*
     const handleClick = (obj) => {
         if (!active === false) {
             props.onInactive()
@@ -29,16 +27,14 @@ export default function Model({ ...props }) {
         }
         props.onExitHover()
     }
+    */
+    
     return (
-        <Select enabled={hovered}>
 
             <group
                 ref={group}
                 {...props}
-                dispose={null}
-                onPointerOver={(event) => hovering(event.object.parent)}
-                onPointerOut={(event) => notHovering()}
-                onClick={(event) => handleClick(event.object.parent)} >
+                dispose={null}>
 
                 <mesh
                     castShadow
@@ -48,9 +44,8 @@ export default function Model({ ...props }) {
                     position={[0.33, -0.04, 0]}
                 />
             </group>
-        </Select>
     )
 
 }
 
-useGLTF.preload("/ComputerTower.gltf");
+useGLTF.preload("/ComputerTower.gltf")
