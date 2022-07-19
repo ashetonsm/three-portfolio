@@ -1,6 +1,8 @@
 import React, { useRef, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import { Select } from '@react-three/postprocessing'
+import { useFrame } from '@react-three/fiber'
+
 
 export default function Model({ ...props }) {
 
@@ -12,6 +14,7 @@ export default function Model({ ...props }) {
     const handleClick = (obj) => {
         if (!active === false) {
             props.onInactive()
+            
         } else {
             props.onActive(obj)
         }

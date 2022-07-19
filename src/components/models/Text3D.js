@@ -17,7 +17,7 @@ export const Text3D = ({ children, props }) => {
           transform: `scale(${hidden ? 0.5 : 1})`
         }}
         distanceFactor={5}
-        position={[0, 1, 0]}
+        position={[0, 1.25, 0]}
         transform
         occlude
         onOcclude={setVisible}>
