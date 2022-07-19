@@ -1,7 +1,6 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 import { Select } from '@react-three/postprocessing'
-import { useFrame } from '@react-three/fiber'
 
 
 export default function Model({ ...props }) {

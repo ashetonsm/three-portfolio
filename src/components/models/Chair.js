@@ -1,33 +1,10 @@
-import React, { useRef, useState } from "react"
+import React, { useRef } from "react"
 import { useGLTF } from "@react-three/drei"
 
 export default function Model({ ...props }) {
 
     const group = useRef()
     const { nodes, materials } = useGLTF("models/Chair.gltf")
-
-    /*
-    const handleClick = (obj) => {
-        if (!active === false) {
-            props.onInactive()
-        } else {
-            props.onActive(obj)
-        }
-        setActive(!active)
-    }
-
-    const hovering = (obj) => {
-        hover(true)
-        props.onHover(obj)
-    }
-
-    const notHovering = () => {
-        if (!active) {
-            hover(false)
-        }
-        props.onExitHover()
-    }
-    */
 
     return (
             <group
