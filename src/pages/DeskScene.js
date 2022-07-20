@@ -10,8 +10,8 @@ import Tablet from '../components/models/Tablet'
 import Desk from '../components/models/Desk'
 import Computer from '../components/models/Computer'
 import Chair from '../components/models/Chair'
-import {Box} from '../components/models/Box'
-import {Text3D} from '../components/models/Text3D'
+import { Box } from '../components/models/Box'
+import { Text3D } from '../components/models/Text3D'
 import { useRoute, useLocation } from 'wouter'
 
 extend({ BigMonitor, Keyboard, Tablet })
@@ -22,10 +22,10 @@ export const DeskScene = ({ props }) => {
     const [activeURL, setActiveURL] = useState()
 
     const interatives = [
-        { modelName: "BigMonitor", linkText: "Github", url: "https://github.com/ashetonsm"},
-        { modelName: "SmallMonitor", linkText: "Resume", url: ""},
-        { modelName: "Keyboard", linkText: "Itch.io", url: "https://nnneato.itch.io/" },
-        { modelName: "Tablet", linkText: "ArtStation", url: "https://artstation.com/ashetonsm" },
+        { model: BigMonitor, modelName: "BigMonitor", linkText: "Github", url: "https://github.com/ashetonsm" },
+        { model: SmallMonitor, modelName: "SmallMonitor", linkText: "Resume", url: "" },
+        { model: Keyboard, modelName: "Keyboard", linkText: "Itch.io", url: "https://nnneato.itch.io/" },
+        { model: Tablet, modelName: "Tablet", linkText: "ArtStation", url: "https://artstation.com/ashetonsm" },
     ]
 
     function Interactives({ q = new THREE.Quaternion(), p = new THREE.Vector3() }) {
@@ -60,12 +60,13 @@ export const DeskScene = ({ props }) => {
                 onPointerMissed={() => setLocation('/')}>
                 {
                     interatives.map((props) =>
-                        <Interactive 
-                        key={props.modelName}  
-                        name={props.modelName}
-                        linkText={props.linkText}
-                        url={props.url} 
-                        {...props} />
+                        <Interactive
+                            key={props.modelName}
+                            name={props.modelName}
+                            model={props.model}
+                            linkText={props.linkText}
+                            url={props.url}
+                            {...props} />
                     )}
             </group>
         )
@@ -79,39 +80,12 @@ export const DeskScene = ({ props }) => {
         })
         return (
             <group {...props} url={url}>
-                {modelName === "Tablet" ? 
-                                    <Tablet
-                                    name={name}
-                                    onPointerOver={(e) => (e.stopPropagation(), hover(true))}
-                                    position={[0, GOLDENRATIO / 2, 1]}
-                                    onPointerOut={() => hover(false)}
-                                    /> : 
-                                    
-                modelName === "BigMonitor" ? 
-                                    <BigMonitor
-                                    name={name}
-                                    onPointerOver={(e) => (e.stopPropagation(), hover(true))}
-                                    position={[0, GOLDENRATIO / 2, 1]}
-                                    onPointerOut={() => hover(false)}
-                                    /> : 
-
-                modelName === "SmallMonitor" ? 
-                                    <SmallMonitor
-                                    name={name}
-                                    onPointerOver={(e) => (e.stopPropagation(), hover(true))}
-                                    position={[0, GOLDENRATIO / 2, 1]}
-                                    onPointerOut={() => hover(false)}
-                                    /> : 
-
-                modelName === "Keyboard" ? 
-                                    <Keyboard
-                                    name={name}
-                                    onPointerOver={(e) => (e.stopPropagation(), hover(true))}
-                                    position={[0, GOLDENRATIO / 2, 1]}
-                                    onPointerOut={() => hover(false)}
-                                    /> : 
-                                    
-                                    null}
+                < props.model
+                    name={name}
+                    onPointerOver={(e) => (e.stopPropagation(), hover(true))}
+                    position={[0, GOLDENRATIO / 2, 1]}
+                    onPointerOut={() => hover(false)}
+                />
             </group>
         )
     }
@@ -130,18 +104,18 @@ export const DeskScene = ({ props }) => {
 
             <Interactives />
 
-            <Box/>
+            <Box />
             <Desk
-            position={[0, GOLDENRATIO / 2, 1]}/>
+                position={[0, GOLDENRATIO / 2, 1]} />
             <Computer
-            position={[0, GOLDENRATIO / 2, 1]}/>
+                position={[0, GOLDENRATIO / 2, 1]} />
             <Chair
-            position={[0, GOLDENRATIO / 2, 1]}/>
+                position={[0, GOLDENRATIO / 2, 1]} />
 
             <Text3D>
                 {activeItem}
                 {activeURL}
-                </Text3D>
+            </Text3D>
 
         </Canvas>
     )
