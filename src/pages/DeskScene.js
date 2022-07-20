@@ -10,21 +10,22 @@ import Tablet from '../components/models/Tablet'
 import Desk from '../components/models/Desk'
 import Computer from '../components/models/Computer'
 import Chair from '../components/models/Chair'
+import {Box} from '../components/models/Box'
 import {Text3D} from '../components/models/Text3D'
 import { useRoute, useLocation } from 'wouter'
-import getUuid from 'uuid-by-string'
 
 extend({ BigMonitor, Keyboard, Tablet })
 
 export const DeskScene = ({ props }) => {
     const GOLDENRATIO = 1.61803398875
     const [activeItem, setActiveItem] = useState()
+    const [activeURL, setActiveURL] = useState()
 
     const interatives = [
-        { model: BigMonitor, modelNum: "0", modelName: "BigMonitor"},
-        { model: SmallMonitor, modelNum: "1", modelName: "SmallMonitor"},
-        { model: Keyboard, modelNum: "2", modelName: "Keyboard" },
-        { model: Tablet, modelNum: "3", modelName: "Tablet" },
+        { modelName: "BigMonitor", linkText: "Github", url: "https://github.com/ashetonsm"},
+        { modelName: "SmallMonitor", linkText: "Resume", url: ""},
+        { modelName: "Keyboard", linkText: "Itch.io", url: "https://nnneato.itch.io/" },
+        { modelName: "Tablet", linkText: "ArtStation", url: "https://artstation.com/ashetonsm" },
     ]
 
     function Interactives({ q = new THREE.Quaternion(), p = new THREE.Vector3() }) {
@@ -39,12 +40,13 @@ export const DeskScene = ({ props }) => {
                 clicked.current.children[0].children[0].children[0].updateWorldMatrix(true, true)
                 clicked.current.children[0].children[0].children[0].localToWorld(p.set(0, GOLDENRATIO / 7, 0.5))
                 clicked.current.children[0].children[0].children[0].getWorldQuaternion(q)
-                console.log(clicked.current.children[0].children[0].name)
-                setActiveItem(clicked.current.children[0].children[0].name)
+                setActiveItem(clicked.current.linkText)
+                setActiveURL(clicked.current.url)
             } else {
                 p.set(0, 1.5, 2)
                 q.identity()
                 setActiveItem()
+                setActiveURL()
             }
         })
         useFrame((state, dt) => {
@@ -58,27 +60,31 @@ export const DeskScene = ({ props }) => {
                 onPointerMissed={() => setLocation('/')}>
                 {
                     interatives.map((props) =>
-                        <Interactive key={props.modelNum}  model={props.model} name={props.modelName} {...props} />
+                        <Interactive 
+                        key={props.modelName}  
+                        name={props.modelName}
+                        linkText={props.linkText}
+                        url={props.url} 
+                        {...props} />
                     )}
             </group>
         )
     }
 
-    function Interactive({ url, modelName, model, ...props }) {
+    function Interactive({ url, modelName, ...props }) {
         const [hovered, hover] = useState(false)
         const name = modelName
         useCursor(hovered)
         useFrame((state) => {
         })
         return (
-            <group {...props}>
+            <group {...props} url={url}>
                 {modelName === "Tablet" ? 
                                     <Tablet
                                     name={name}
                                     onPointerOver={(e) => (e.stopPropagation(), hover(true))}
                                     position={[0, GOLDENRATIO / 2, 1]}
                                     onPointerOut={() => hover(false)}
-                                    scale={[1, 1, 1]}
                                     /> : 
                                     
                 modelName === "BigMonitor" ? 
@@ -87,7 +93,6 @@ export const DeskScene = ({ props }) => {
                                     onPointerOver={(e) => (e.stopPropagation(), hover(true))}
                                     position={[0, GOLDENRATIO / 2, 1]}
                                     onPointerOut={() => hover(false)}
-                                    scale={[1, 1, 1]}
                                     /> : 
 
                 modelName === "SmallMonitor" ? 
@@ -96,7 +101,6 @@ export const DeskScene = ({ props }) => {
                                     onPointerOver={(e) => (e.stopPropagation(), hover(true))}
                                     position={[0, GOLDENRATIO / 2, 1]}
                                     onPointerOut={() => hover(false)}
-                                    scale={[1, 1, 1]}
                                     /> : 
 
                 modelName === "Keyboard" ? 
@@ -105,7 +109,6 @@ export const DeskScene = ({ props }) => {
                                     onPointerOver={(e) => (e.stopPropagation(), hover(true))}
                                     position={[0, GOLDENRATIO / 2, 1]}
                                     onPointerOut={() => hover(false)}
-                                    scale={[1, 1, 1]}
                                     /> : 
                                     
                                     null}
@@ -115,9 +118,7 @@ export const DeskScene = ({ props }) => {
 
     return (
         <Canvas style={{ height: 500 }} >
-            <ambientLight intensity={0.5} />
-            <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-            <pointLight position={[-10, -10, -10]} />
+            <ambientLight intensity={1} />
             <Selection>
                 <EffectComposer multisampling={8} autoClear={false}>
                     <Outline blur
@@ -129,6 +130,7 @@ export const DeskScene = ({ props }) => {
 
             <Interactives />
 
+            <Box/>
             <Desk
             position={[0, GOLDENRATIO / 2, 1]}/>
             <Computer
@@ -136,7 +138,10 @@ export const DeskScene = ({ props }) => {
             <Chair
             position={[0, GOLDENRATIO / 2, 1]}/>
 
-            <Text3D>{activeItem}</Text3D>
+            <Text3D>
+                {activeItem}
+                {activeURL}
+                </Text3D>
 
         </Canvas>
     )
