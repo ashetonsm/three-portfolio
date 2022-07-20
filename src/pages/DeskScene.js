@@ -35,7 +35,7 @@ export const DeskScene = ({ props }) => {
         const [, setLocation] = useLocation()
         useEffect(() => {
             clicked.current = ref.current.getObjectByName(params?.id)
-            console.log(clicked.current)
+            // console.log(clicked.current)
             if (clicked.current) {
                 clicked.current.children[0].children[0].children[0].updateWorldMatrix(true, true)
                 clicked.current.children[0].children[0].children[0].localToWorld(p.set(0, GOLDENRATIO / 7, 0.5))
