@@ -18,6 +18,8 @@ extend({ BigMonitor, Keyboard, Tablet })
 
 export const DeskScene = ({ props }) => {
     const GOLDENRATIO = 1.61803398875
+    const [activeItem, setActiveItem] = useState()
+
     const interatives = [
         { model: BigMonitor, modelNum: "0", modelName: "BigMonitor"},
         { model: SmallMonitor, modelNum: "1", modelName: "SmallMonitor"},
@@ -34,12 +36,15 @@ export const DeskScene = ({ props }) => {
             clicked.current = ref.current.getObjectByName(params?.id)
             console.log(clicked.current)
             if (clicked.current) {
-                clicked.current.children[0].updateWorldMatrix(true, true)
-                clicked.current.children[0].localToWorld(p.set(0, GOLDENRATIO / 7, 0.5))
-                clicked.current.children[0].getWorldQuaternion(q)
+                clicked.current.children[0].children[0].children[0].updateWorldMatrix(true, true)
+                clicked.current.children[0].children[0].children[0].localToWorld(p.set(0, GOLDENRATIO / 7, 0.5))
+                clicked.current.children[0].children[0].children[0].getWorldQuaternion(q)
+                console.log(clicked.current.children[0].children[0].name)
+                setActiveItem(clicked.current.children[0].children[0].name)
             } else {
                 p.set(0, 1.5, 2)
                 q.identity()
+                setActiveItem()
             }
         })
         useFrame((state, dt) => {
@@ -61,7 +66,7 @@ export const DeskScene = ({ props }) => {
 
     function Interactive({ url, modelName, model, ...props }) {
         const [hovered, hover] = useState(false)
-        const name = getUuid(modelName)
+        const name = modelName
         useCursor(hovered)
         useFrame((state) => {
         })
@@ -131,7 +136,7 @@ export const DeskScene = ({ props }) => {
             <Chair
             position={[0, GOLDENRATIO / 2, 1]}/>
 
-            <Text3D>Test Text</Text3D>
+            <Text3D>{activeItem}</Text3D>
 
         </Canvas>
     )
