@@ -5,7 +5,7 @@ import { Select } from '@react-three/postprocessing'
 export default function Model({ ...props }) {
 
     const group = useRef();
-    const { nodes, materials } = useGLTF("models/Tablet.gltf");
+    const { nodes, materials } = useGLTF("/three-portfolio/models/Tablet.gltf");
 
     return (
         <Select>

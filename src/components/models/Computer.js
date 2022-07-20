@@ -4,7 +4,7 @@ import { useGLTF } from "@react-three/drei"
 export default function Model({ ...props }) {
 
     const group = useRef()
-    const { nodes, materials } = useGLTF("models/ComputerTower.gltf")
+    const { nodes, materials } = useGLTF("/three-portfolio/models/ComputerTower.gltf")
 
     return (
 

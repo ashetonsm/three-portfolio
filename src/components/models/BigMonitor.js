@@ -6,7 +6,7 @@ import { Select } from '@react-three/postprocessing'
 export default function Model({ ...props }) {
 
     const group = useRef();
-    const { nodes, materials } = useGLTF("models/BigMonitor.gltf");
+    const { nodes, materials } = useGLTF("/three-portfolio/models/BigMonitor.gltf");
 
     return (
         <Select>
