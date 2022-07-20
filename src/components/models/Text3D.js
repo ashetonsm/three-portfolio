@@ -1,39 +1,43 @@
-import React, { useState, useRef } from 'react'
-import { Html, Text } from '@react-three/drei'
+import React, { useRef } from 'react'
+import { Html } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
+import { a, useTransition, useSpring } from '@react-spring/three'
 
 export const Text3D = ({ children, props }) => {
-  const [size, set] = useState(0.5)
-  const [hidden, setVisible] = useState(false)
   const ref = useRef()
   useFrame(({ camera }) => ref.current.quaternion.copy(camera.quaternion))
 
-  return (
-    <mesh ref={ref} scale={size * 2} >
-      <Text
-        color='#000'
-        fontSize={0.2}
-        position={[0, 2, 0]}
-      >
-        {children[0]}
-      </Text>
+
+  return ( console.log(ref.current),
+    <mesh
+      ref={ref}
+      scale={0}
+      {...props}>
 
       <Html {...props}
+        distanceFactor={3}
+        color='#000'
+      >
+        <div         
         style={{
-          transition: 'all 0.2s',
-          opacity: hidden ? 0 : 1,
-          transform: `scale(${hidden ? 0.5 : 1})`
-        }}
-        distanceFactor={5}
-        position={[0, 1.8, 0]}
-        transform
-        occlude
-        onOcclude={setVisible}>
-        <a
-          href={children[1]}
-          target="_blank"
-          rel="noreferrer noopener"
-        >{children[1]}</a>
+          'backgroundColor': '#ffffff',
+          'borderRadius' : 10,
+          'width' : '100%',
+          'paddingLeft': '50%',
+          'paddingRight': '50%',
+        }}>
+          <p>
+            {children[0]}
+          </p>
+          <p>
+            <a
+              href={children[1]}
+              target="_blank"
+              rel="noreferrer noopener"
+            >{children[1]}
+            </a>
+          </p>
+        </div>
       </Html>
     </mesh>
   )
