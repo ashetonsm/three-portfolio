@@ -1,7 +1,7 @@
 import * as THREE from 'three'
-import { Canvas, extend, useThree, useFrame } from "@react-three/fiber"
+import { Canvas, extend, useFrame } from "@react-three/fiber"
 import { useRef, useState, useEffect } from "react"
-import { useCursor, Image, MeshReflectorMaterial, Text, Environment } from '@react-three/drei'
+import { useCursor, OrbitControls } from '@react-three/drei'
 import { Selection, EffectComposer, Outline } from '@react-three/postprocessing'
 import BigMonitor from '../components/models/BigMonitor'
 import SmallMonitor from '../components/models/SmallMonitor'
@@ -93,6 +93,24 @@ export const DeskScene = ({ props }) => {
     return (
         <Canvas style={{ height: 500 }} >
             <ambientLight intensity={1} />
+            <OrbitControls
+                minAzimuthAngle={Math.PI / -5}
+                maxAzimuthAngle={Math.PI / 5}
+                autoRotate={false}
+                maxPolarAngle={Math.PI / 4}
+                minPolarAngle={Math.PI / 5}
+                enableZoom={false}
+                enablePan={false}
+            />
+
+            {activeItem !== undefined ?
+                <Text3D>
+                    {activeItem}
+                    {activeURL}
+                </Text3D>
+                : null
+            }
+
             <Selection>
                 <EffectComposer multisampling={8} autoClear={false}>
                     <Outline blur
@@ -112,10 +130,7 @@ export const DeskScene = ({ props }) => {
             <Chair
                 position={[0, GOLDENRATIO / 2, 1]} />
 
-            <Text3D>
-                {activeItem}
-                {activeURL}
-            </Text3D>
+
 
         </Canvas>
     )
