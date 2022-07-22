@@ -23,9 +23,9 @@ export const Text3D = ({ children, props }) => {
             'backgroundColor': '#ffffff',
             'borderRadius': 10,
             'width': '100%',
-            'text-align': 'center',
-            'margin-left': 'auto',
-            'margin-right': 'auto',
+            'textAlign': 'center',
+            'marginLeft': 'auto',
+            'marginRight': 'auto',
 
           }}>
           <p>
