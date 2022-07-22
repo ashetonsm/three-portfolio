@@ -15,7 +15,6 @@ export default function Model({ ...props }) {
                 {...props}
                 dispose={null}
             >
-
                 <mesh
                     castShadow
                     receiveShadow
@@ -23,6 +22,13 @@ export default function Model({ ...props }) {
                     material={materials["Big Monitor"]}
                     position={[0.21, 0.5, -0.12]}
                 />
+
+            {/* <mesh
+                position={[0.22, .6, -.1]}
+                scale={[.5, .3, .5]}>
+                <planeGeometry />
+                <meshStandardMaterial />
+            </mesh> */}
             </group>
         </Select>
     )
