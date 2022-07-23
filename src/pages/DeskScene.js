@@ -43,13 +43,12 @@ export const DeskScene = ({ props }) => {
             clicked.current = ref.current.getObjectByName(params?.id)
             if (clicked.current) {
                 if (clicked.current.children.length !== 0) {
-                    //console.log(clicked.current)
                     clicked.current.children[0].updateWorldMatrix(true, true)
                     clicked.current.children[0].localToWorld(p.set(0, GOLDENRATIO / 7, 0.5))
                     clicked.current.children[0].getWorldQuaternion(q)
 
-                    setActiveItem(clicked.current.parent.parent.linkText)
-                    setActiveURL(clicked.current.parent.parent.url)
+                    setActiveItem(clicked.current.parent.linkText)
+                    setActiveURL(clicked.current.parent.url)
 
                     switch (clicked.current.friendlyName) {
                         case "BigMonitor":
