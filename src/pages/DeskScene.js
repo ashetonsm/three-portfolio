@@ -1,9 +1,8 @@
 import * as THREE from 'three'
-import { Canvas, extend, useFrame, useLoader } from "@react-three/fiber"
+import { Canvas, extend, useFrame } from "@react-three/fiber"
 import { useRef, useState, useEffect } from "react"
-import { useCursor, OrbitControls, useTexture } from '@react-three/drei'
+import { useCursor, OrbitControls } from '@react-three/drei'
 import { Selection, EffectComposer, Outline } from '@react-three/postprocessing'
-import { TextureLoader } from "three/src/loaders/TextureLoader"
 import BigMonitor from '../components/models/BigMonitor'
 import SmallMonitor from '../components/models/SmallMonitor'
 import Keyboard from '../components/models/Keyboard'
@@ -11,8 +10,7 @@ import Tablet from '../components/models/Tablet'
 import Desk from '../components/models/Desk'
 import Computer from '../components/models/Computer'
 import Chair from '../components/models/Chair'
-import { TestBox } from '../components/models/TestBox'
-import { BigScreen } from '../components/models/BigScreen'
+import { ScreenOverlay } from '../components/models/ScreenOverlay'
 import { Box } from '../components/models/Box'
 import { Text3D } from '../components/models/Text3D'
 import { useRoute, useLocation } from 'wouter'
@@ -24,8 +22,6 @@ export const DeskScene = ({ props }) => {
     const GOLDENRATIO = 1.61803398875
     const [activeItem, setActiveItem] = useState()
     const [activeURL, setActiveURL] = useState()
-    const [showPanelR, setShowPanelR] = useState(true)
-    const [showPanelL, setShowPanelL] = useState(true)
 
     const interatives = [
         { model: BigMonitor, modelName: "BigMonitor", linkText: "Github", url: "https://github.com/ashetonsm" },
@@ -43,7 +39,6 @@ export const DeskScene = ({ props }) => {
         useEffect(() => {
             // These are the screens we'll want to change the images on
             screens = ref.current.parent.getObjectByName("Screens")
-            console.log(screens)
 
             clicked.current = ref.current.getObjectByName(params?.id)
             if (clicked.current) {
@@ -156,7 +151,7 @@ export const DeskScene = ({ props }) => {
 
             <Interactives />
 
-            <BigScreen
+            <ScreenOverlay
                 name="Screens"
             />
 
