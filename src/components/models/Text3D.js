@@ -1,31 +1,24 @@
 import React, { useRef } from 'react'
 import { Html, Text } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
-import { a, useTransition, useSpring } from '@react-spring/three'
 
 export const Text3D = ({ children, props }) => {
   const ref = useRef()
-  const GOLDENRATIO = 1.61803398875
-  useFrame(({ camera }) => ref.current.quaternion.copy(camera.quaternion))
-
 
   return (
     <Text
       ref={ref}
-      scale={0}
       {...props}
+      position={[]}
     >
       <Html {...props}
         color='#000'
       >
         <div
           style={{
-            'backgroundColor': '#ffffff',
-            'borderRadius': 10,
-            'width': '100%',
-            'textAlign': 'center',
-            'marginLeft': 'auto',
-            'marginRight': 'auto',
+            backgroundColor: '#ffffff',
+            width: '100vw',
+            textAlign: 'center',
+            padding: 10,
 
           }}>
           <p>
