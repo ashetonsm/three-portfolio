@@ -24,19 +24,8 @@ export const DeskScene = ({ props }) => {
     const GOLDENRATIO = 1.61803398875
     const [activeItem, setActiveItem] = useState()
     const [activeURL, setActiveURL] = useState()
-    const [showPanelR, setShowPanelR] = useState(false)
-    const [showPanelL, setShowPanelL] = useState(false)
-
-    const [artstationTex, githubTex, itchTex] = useLoader(TextureLoader,
-        [
-            '/three-portfolio/textures/artstation-logo.png',
-            '/three-portfolio/textures/github-logo.png',
-            '/three-portfolio/textures/itchio-logo.png',
-        ])
-
-
-    const [bigMonTex, setBigMonTex] = useState(artstationTex)
-    const [smallMonTex, setSmallMonTex] = useState(artstationTex)
+    const [showPanelR, setShowPanelR] = useState(true)
+    const [showPanelL, setShowPanelL] = useState(true)
 
     const interatives = [
         { model: BigMonitor, modelName: "BigMonitor", linkText: "Github", url: "https://github.com/ashetonsm" },
@@ -48,40 +37,41 @@ export const DeskScene = ({ props }) => {
     function Interactives({ q = new THREE.Quaternion(), p = new THREE.Vector3() }) {
         const ref = useRef()
         const clicked = useRef()
+        let screens
         const [, params] = useRoute('/item/:id')
         const [, setLocation] = useLocation()
         useEffect(() => {
+            // These are the screens we'll want to change the images on
+            screens = ref.current.parent.getObjectByName("Screens")
+            console.log(screens)
+
             clicked.current = ref.current.getObjectByName(params?.id)
             if (clicked.current) {
                 if (clicked.current.children.length !== 0) {
-                    console.log(clicked.current)
+                    //console.log(clicked.current)
                     clicked.current.children[0].updateWorldMatrix(true, true)
                     clicked.current.children[0].localToWorld(p.set(0, GOLDENRATIO / 7, 0.5))
                     clicked.current.children[0].getWorldQuaternion(q)
 
-                    if (clicked.current.friendlyName === "BigMonitor") {
-                        setBigMonTex(githubTex)
-                        setSmallMonTex(githubTex)
-                    }
-                    if (clicked.current.friendlyName === "SmallMonitor") {
-                        // This should be the resume
-                        setBigMonTex(itchTex)
-                        setSmallMonTex(itchTex)
-                    }
-                    if (clicked.current.friendlyName === "Keyboard") {
-                        setSmallMonTex(itchTex)
-                        setBigMonTex(itchTex)
-                    }
-                    if (clicked.current.friendlyName === "Tablet") {
-                        setSmallMonTex(artstationTex)
-                        setBigMonTex(artstationTex)
-                    }
-
-
                     setActiveItem(clicked.current.parent.parent.linkText)
                     setActiveURL(clicked.current.parent.parent.url)
-                    setShowPanelL(true)
-                    setShowPanelR(true)
+
+                    switch (clicked.current.friendlyName) {
+                        case "BigMonitor":
+                            screens.handleTexture(2)
+                            break
+                        case "SmallMonitor":
+                            screens.handleTexture(0)
+                            break
+                        case "Tablet":
+                            screens.handleTexture(1)
+                            break
+                        case "Keyboard":
+                            screens.handleTexture(3)
+                            break
+                        default:
+                            screens.handleTexture(0)
+                    }
                 }
 
             } else {
@@ -89,8 +79,6 @@ export const DeskScene = ({ props }) => {
                 q.identity()
                 setActiveItem()
                 setActiveURL()
-                setShowPanelR(false)
-                setShowPanelL(false)
             }
         })
         useFrame((state, dt) => {
@@ -157,22 +145,6 @@ export const DeskScene = ({ props }) => {
                 : null
             }
 
-            {showPanelR === true ?
-                <BigScreen
-                    material={bigMonTex}
-                    position={[0.215, 1.4, .895]}
-                    scale={[.25, .25, .25]}
-                />
-                : null}
-
-            {showPanelL === true ?
-                <BigScreen
-                    material={smallMonTex}
-                    position={[-0.3, 1.4, 0.96]}
-                    scale={[.25, .25, .25]}
-                />
-                : null}
-
             <Selection>
                 <EffectComposer multisampling={8} autoClear={false}>
                     <Outline blur
@@ -183,6 +155,10 @@ export const DeskScene = ({ props }) => {
             </Selection>
 
             <Interactives />
+
+            <BigScreen
+                name="Screens"
+            />
 
             <Box />
 
