@@ -1,9 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useLoader } from "@react-three/fiber";
 import { DoubleSide } from "three";
 import { TextureLoader } from "three/src/loaders/TextureLoader"
+import { useSpring, a } from "@react-spring/three";
 
-export const BigScreen = (props) => {
+export const ScreenOverlay = (props) => {
     const ref = useRef()
 
     const [transparentTex, artstationTex, githubTex, itchTex] = useLoader(TextureLoader,
@@ -16,6 +17,15 @@ export const BigScreen = (props) => {
 
     const [currentTexture, setCurrentTexture] = useState(transparentTex)
 
+    const styles = useSpring({
+        opacity: 1
+    })
+
+    useEffect(() => {
+        console.log("Texture changed.")
+    }, [currentTexture])
+
+
     const handleTexture = (texture) => {
         switch (texture) {
             case 0: {
@@ -24,12 +34,10 @@ export const BigScreen = (props) => {
             }
             case 1: {
                 setCurrentTexture(artstationTex)
-                console.log("set to #" + texture)
                 break
             }
             case 2: {
                 setCurrentTexture(githubTex)
-                console.log("set to #" + texture)
                 break
             }
             case 3: {
@@ -50,12 +58,12 @@ export const BigScreen = (props) => {
             handleTexture={handleTexture}
         >
             <planeGeometry args={[1, 1, 1]} />
-            <meshStandardMaterial
+            <a.meshStandardMaterial
                 map={currentTexture}
+                opacity={styles.opacity}
                 transparent={true}
                 side={DoubleSide}
             />
         </mesh>
     )
-
 }
