@@ -6,6 +6,7 @@ import { useSpring, a } from "@react-spring/three";
 
 export const ScreenOverlay = (props) => {
     const ref = useRef()
+    const [currentOpacity, setOpacity] = useState(1)
 
     const [transparentTex, artstationTex, githubTex, itchTex] = useLoader(TextureLoader,
         [
@@ -18,11 +19,11 @@ export const ScreenOverlay = (props) => {
     const [currentTexture, setCurrentTexture] = useState(transparentTex)
 
     const styles = useSpring({
-        opacity: 1
+        opacity: currentOpacity
     })
 
     useEffect(() => {
-        console.log("Texture changed.")
+        
     }, [currentTexture])
 
 
