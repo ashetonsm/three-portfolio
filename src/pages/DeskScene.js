@@ -24,8 +24,8 @@ export const DeskScene = ({ props }) => {
     const [activeURL, setActiveURL] = useState()
 
     const interatives = [
-        { model: BigMonitor, modelName: "BigMonitor", linkText: "Github", url: "https://github.com/ashetonsm" },
-        { model: SmallMonitor, modelName: "SmallMonitor", linkText: "Resume", url: "" },
+        { model: BigMonitor, modelName: "BigMonitor", linkText: "GitHub", url: "https://github.com/ashetonsm" },
+        { model: SmallMonitor, modelName: "SmallMonitor", linkText: "Résumé", url: "/three-portfolio/files/Mayfield_A_Resume_R.pdf" },
         { model: Keyboard, modelName: "Keyboard", linkText: "Itch.io", url: "https://nnneato.itch.io/" },
         { model: Tablet, modelName: "Tablet", linkText: "ArtStation", url: "https://artstation.com/ashetonsm" },
     ]
@@ -51,14 +51,14 @@ export const DeskScene = ({ props }) => {
                     setActiveURL(clicked.current.parent.url)
 
                     switch (clicked.current.friendlyName) {
-                        case "BigMonitor":
-                            screens.handleTexture(2)
-                            break
                         case "SmallMonitor":
                             screens.handleTexture(0)
                             break
                         case "Tablet":
                             screens.handleTexture(1)
+                            break
+                        case "BigMonitor":
+                            screens.handleTexture(2)
                             break
                         case "Keyboard":
                             screens.handleTexture(3)
@@ -73,6 +73,7 @@ export const DeskScene = ({ props }) => {
                 q.identity()
                 setActiveItem()
                 setActiveURL()
+                screens.handleTexture(0)
             }
         })
         useFrame((state, dt) => {
