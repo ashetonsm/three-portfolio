@@ -15,15 +15,17 @@ export const Text3D = ({ children, props }) => {
       >
         <div
           style={{
-            backgroundColor: '#ffffff',
-            width: '100vw',
+            backgroundColor: '#ffffff80',
+            width: '20vw',
+            height: '100vh',
+            overflowWrap: 'anywhere',
             textAlign: 'center',
             padding: 10,
 
           }}>
-          <p>
+          <h1>
             {children[0]}
-          </p>
+          </h1>
           <p>
             <a
               href={children[1]}
