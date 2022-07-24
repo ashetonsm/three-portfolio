@@ -9,9 +9,9 @@ This project is actively being worked on! There's a lot to do:
     - [ ] Transition monitor texture
 - [ ] Text styling
     - [x] Center text
+    - [ ] Slide in the link drawer
 - [ ] Feedback (audio, visual) on selection
     - [ ] Audio toggle
 - [ ] Desk toys with physics
-- [ ] Resume implementation
 - [x] Free camera rotation
 - [x] Zoom on click
