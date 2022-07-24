@@ -2,7 +2,6 @@ import * as THREE from 'three'
 import { Canvas, extend, useFrame } from "@react-three/fiber"
 import { useRef, useState, useEffect } from "react"
 import { useCursor, OrbitControls } from '@react-three/drei'
-import { Selection, EffectComposer, Outline } from '@react-three/postprocessing'
 import BigMonitor from '../components/models/BigMonitor'
 import SmallMonitor from '../components/models/SmallMonitor'
 import Keyboard from '../components/models/Keyboard'
@@ -139,15 +138,6 @@ export const DeskScene = ({ props }) => {
                 </Text3D>
                 : null
             }
-
-            <Selection>
-                <EffectComposer multisampling={8} autoClear={false}>
-                    <Outline blur
-                        visibleEdgeColor="#00c5d0"
-                        edgeStrength={50}
-                        width={2500} />
-                </EffectComposer>
-            </Selection>
 
             <Interactives />
 
