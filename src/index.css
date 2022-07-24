@@ -7,7 +7,17 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+h1, h2, h3, h4 {
+  font-size: 4vmin;
+  font-family: eduVicWantB, 'Courier New', Courier, monospace;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+@font-face {
+  font-family: eduVicWantB;
+  src: url(/src/components/UI/EduVICWANTBeginner-VW.ttf);
 }
