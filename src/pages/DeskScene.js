@@ -32,14 +32,15 @@ export const DeskScene = ({ props }) => {
     function Interactives({ q = new THREE.Quaternion(), p = new THREE.Vector3() }) {
         const ref = useRef()
         const clicked = useRef()
-        let screens
+        const screens = useRef()
+        let drawer = useRef()
         const [, params] = useRoute('/item/:id')
         const [, setLocation] = useLocation()
         useEffect(() => {
-            // These are the screens we'll want to change the images on
-            screens = ref.current.parent.getObjectByName("Screens")
-
             clicked.current = ref.current.getObjectByName(params?.id)
+            drawer.current = ref.current.parent.getObjectByName("Text3D")
+            screens.current = ref.current.parent.getObjectByName("Screens")
+
             if (clicked.current) {
                 if (clicked.current.children.length !== 0) {
                     clicked.current.children[0].updateWorldMatrix(true, true)
@@ -49,30 +50,31 @@ export const DeskScene = ({ props }) => {
                     setActiveItem(clicked.current.parent.linkText)
                     setActiveURL(clicked.current.parent.url)
 
+                    drawer.current.toggleDrawer(true)
+
                     switch (clicked.current.friendlyName) {
                         case "SmallMonitor":
-                            screens.handleTexture(0)
+                            screens.current.handleTexture(0)
                             break
                         case "Tablet":
-                            screens.handleTexture(1)
+                            screens.current.handleTexture(1)
                             break
                         case "BigMonitor":
-                            screens.handleTexture(2)
+                            screens.current.handleTexture(2)
                             break
                         case "Keyboard":
-                            screens.handleTexture(3)
+                            screens.current.handleTexture(3)
                             break
                         default:
-                            screens.handleTexture(0)
+                            screens.current.handleTexture(0)
                     }
                 }
 
             } else {
                 p.set(0, 1.5, 2)
                 q.identity()
-                setActiveItem()
-                setActiveURL()
-                screens.handleTexture(0)
+                screens.current.handleTexture(0)
+                drawer.current.toggleDrawer(false)
             }
         })
         useFrame((state, dt) => {
@@ -131,13 +133,11 @@ export const DeskScene = ({ props }) => {
                 enablePan={false}
             />
 
-            {activeItem !== undefined ?
-                <Text3D>
-                    {activeItem}
-                    {activeURL}
-                </Text3D>
-                : null
-            }
+            <Text3D>
+                {activeItem}
+                {activeURL}
+            </Text3D>
+
 
             <Interactives />
 
