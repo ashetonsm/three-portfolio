@@ -1,6 +1,6 @@
 import './App.css'
-import { DeskScene } from './pages/DeskScene';
-import { Switch, Route } from "wouter";
+import { DeskScene } from './pages/DeskScene'
+import { Switch, Route } from "wouter"
 
 function App() {
 
@@ -13,4 +13,4 @@ function App() {
   )
 }
 
-export default App;
+export default App
