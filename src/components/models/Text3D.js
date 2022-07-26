@@ -42,7 +42,7 @@ export const Text3D = ({ children, props }) => {
               backgroundColor: '#ffffff80',
               position: 'absolute',
               left: '-50vw',
-              top: '-30vh',
+              top: '-20vh',
               width: '30vw',
               height: '100vh',
               overflowWrap: 'anywhere',
