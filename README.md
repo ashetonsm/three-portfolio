@@ -3,15 +3,16 @@
 ---
 This project is actively being worked on! There's a lot to do:
 
-- [ ] Fix routing
+
 - [ ] Finish textures
     - [x] Change monitor texture on item selection
-    - [ ] Transition monitor texture
+    - [ ] Animate texture transition
 - [ ] Text styling
     - [x] Center text
-    - [ ] Slide in the link drawer
+    - [x] Slide in the link drawer
 - [ ] Feedback (audio, visual) on selection
     - [ ] Audio toggle
 - [ ] Desk toys with physics
+- [x] Fix routing
 - [x] Free camera rotation
 - [x] Zoom on click
