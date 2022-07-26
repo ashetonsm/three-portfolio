@@ -16,16 +16,16 @@ export const Text3D = ({ children, props }) => {
         position:
           showDrawer ? [0, 0, 0] :
             !showDrawer && children[0] === undefined ?
-              [-5, 0, 0] : [-5, 0, 0]
+              [-50, 0, 0] : [-50, 0, 0]
       },
       from: {
         position:
-          showDrawer ? [-5, 0, 0] :
+          showDrawer ? [-50, 0, 0] :
             !showDrawer && children[0] === undefined ?
-              [-5, 0, 0] : [0, 0, 0]
+              [-50, 0, 0] : [0, 0, 0]
       },
-      config: showDrawer ? { mass: 2, tension: 500, friction: 100 } :
-        { mass: 2, tension: 200, friction: 500 }
+      config: showDrawer ? { mass: 2, tension: 600, friction: 80 } :
+        { mass: 2, tension: 200, friction: 300 }
     })
 
     return (
@@ -53,7 +53,7 @@ export const Text3D = ({ children, props }) => {
             <h1>
               {children[0]}
             </h1>
-            <p>
+            <h2>
               <a
                 href={children[1]}
                 target="_blank"
@@ -61,7 +61,7 @@ export const Text3D = ({ children, props }) => {
               >
                 {children[1]}
               </a>
-            </p>
+            </h2>
           </div>
         </Html>
       </animated.mesh>
