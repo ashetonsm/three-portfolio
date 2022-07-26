@@ -7,9 +7,19 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4 {
+h1 {
   font-size: 4vmin;
   font-family: eduVicWantB, 'Courier New', Courier, monospace;
+}
+
+h2 {
+  font-size: 3vmin;
+  font-family: eduVicWantB, 'Courier New', Courier, monospace;
+}
+
+a:link, a:hover a:visited, a:active {
+  color: #000000;
+  text-decoration: none;
 }
 
 code {
