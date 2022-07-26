@@ -1,16 +1,14 @@
 {
   "files": {
-    "main.css": "/three-portfolio/static/css/main.e819574a.css",
-    "main.js": "/three-portfolio/static/js/main.cf7214fc.js",
-    "static/js/787.dff3067c.chunk.js": "/three-portfolio/static/js/787.dff3067c.chunk.js",
+    "main.css": "/three-portfolio/static/css/main.d63a0746.css",
+    "main.js": "/three-portfolio/static/js/main.9b55ac37.js",
     "static/media/EduVICWANTBeginner-VW.ttf": "/three-portfolio/static/media/EduVICWANTBeginner-VW.6ba3877fd8693a74df58.ttf",
     "index.html": "/three-portfolio/index.html",
-    "main.e819574a.css.map": "/three-portfolio/static/css/main.e819574a.css.map",
-    "main.cf7214fc.js.map": "/three-portfolio/static/js/main.cf7214fc.js.map",
-    "787.dff3067c.chunk.js.map": "/three-portfolio/static/js/787.dff3067c.chunk.js.map"
+    "main.d63a0746.css.map": "/three-portfolio/static/css/main.d63a0746.css.map",
+    "main.9b55ac37.js.map": "/three-portfolio/static/js/main.9b55ac37.js.map"
   },
   "entrypoints": [
-    "static/css/main.e819574a.css",
-    "static/js/main.cf7214fc.js"
+    "static/css/main.d63a0746.css",
+    "static/js/main.9b55ac37.js"
   ]
 }
