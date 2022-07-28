@@ -146,7 +146,7 @@ export const DeskScene = ({ props }) => {
                 name="Screens"
             />
 
-            <Box />
+            <Box position={[0, GOLDENRATIO / 2, 2.7]} />
 
             <Desk
                 position={[0, GOLDENRATIO / 2, 1]} />
