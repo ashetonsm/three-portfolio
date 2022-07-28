@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/three-portfolio/static/css/main.0aa748c9.css",
-    "main.js": "/three-portfolio/static/js/main.db5bab04.js",
+    "main.js": "/three-portfolio/static/js/main.10eee56a.js",
     "static/media/EduVICWANTBeginner-VW.ttf": "/three-portfolio/static/media/EduVICWANTBeginner-VW.6ba3877fd8693a74df58.ttf",
     "index.html": "/three-portfolio/index.html",
     "main.0aa748c9.css.map": "/three-portfolio/static/css/main.0aa748c9.css.map",
-    "main.db5bab04.js.map": "/three-portfolio/static/js/main.db5bab04.js.map"
+    "main.10eee56a.js.map": "/three-portfolio/static/js/main.10eee56a.js.map"
   },
   "entrypoints": [
     "static/css/main.0aa748c9.css",
-    "static/js/main.db5bab04.js"
+    "static/js/main.10eee56a.js"
   ]
 }
