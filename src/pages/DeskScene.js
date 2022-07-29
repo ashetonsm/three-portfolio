@@ -122,7 +122,7 @@ export const DeskScene = ({ props }) => {
     }
 
     return (
-        <Canvas style={{ height: 500 }} >
+        <Canvas style={{ height: '100vh' }} >
             <ambientLight intensity={1} />
             <OrbitControls
                 minAzimuthAngle={Math.PI / -5}
@@ -146,7 +146,7 @@ export const DeskScene = ({ props }) => {
                 name="Screens"
             />
 
-            <Box position={[0, GOLDENRATIO / 2, 2.7]} />
+            <Box position={[0, GOLDENRATIO / 2, 2.5]} />
 
             <Desk
                 position={[0, GOLDENRATIO / 2, 1]} />
