@@ -1,18 +1,26 @@
-import { useRef } from "react"
-import { DoubleSide } from "three"
+import * as THREE from 'three'
+import React, { useRef } from "react";
+import { useGLTF } from "@react-three/drei";
 
 export const Box = (props) => {
 
     const ref = useRef()
+    const { nodes, materials } = useGLTF("/three-portfolio/models/Cube.gltf");
 
     return (
-        <mesh
-            {...props}
+        <group
             ref={ref}
-        >
-            <boxGeometry args={[10, 15, 10]} />
-            <meshStandardMaterial color={'#b4dada'} side={DoubleSide}/>
-        </mesh>
+            {...props}
+            dispose={null}>
+            <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.Cube.geometry}
+                material={materials.Background}
+                rotation={new THREE.Euler(0, 0, 0)}
+            />
+        </group>
     )
-
 }
+
+useGLTF.preload("/three-portfolio/models/Cube.gltf");
