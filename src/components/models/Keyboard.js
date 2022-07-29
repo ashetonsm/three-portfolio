@@ -13,8 +13,7 @@ export default function Model({ ...props }) {
 
             <mesh
                 castShadow
-                receiveShadow
-                geometry={nodes.Keyboard.geometry}
+                geometry={nodes.Keys.geometry}
                 material={materials.Keyboard}
                 position={[-0.14, 0.4, 0.12]}
             />
@@ -22,4 +21,4 @@ export default function Model({ ...props }) {
     )
 }
 
-useGLTF.preload("/Keyboard.gltf");
+useGLTF.preload("/three-portfolio/models/Keyboard.gltf");

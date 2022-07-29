@@ -1,3 +1,4 @@
+import * as THREE from 'three'
 import React, { useRef, useState } from "react";
 import { useLoader } from "@react-three/fiber";
 import { DoubleSide } from "three";
@@ -46,6 +47,7 @@ export const ScreenOverlay = (props) => {
             position={[0.22, 1.4, 0.9]}
             scale={[0.25, 0.25, 0.25]}
             handleTexture={handleTexture}
+            rotation={new THREE.Euler(0, -0.2, 0)}
         >
             <planeGeometry args={[1, 1, 1]} />
             <meshStandardMaterial

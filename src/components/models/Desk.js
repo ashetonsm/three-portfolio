@@ -15,11 +15,17 @@ export default function Model({ ...props }) {
       <mesh
         castShadow
         receiveShadow
-        geometry={nodes.Desk.geometry}
+        geometry={nodes.Desk_1.geometry}
         material={materials.DeskWood}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Desk_2.geometry}
+        material={materials.Accessories}
       />
     </group>
   )
 }
 
-useGLTF.preload("/Desk.gltf")
+useGLTF.preload("/three-portfolio/models/Desk.gltf")

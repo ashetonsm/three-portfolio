@@ -9,6 +9,7 @@ import Tablet from '../components/models/Tablet'
 import Desk from '../components/models/Desk'
 import Computer from '../components/models/Computer'
 import Chair from '../components/models/Chair'
+import Mouse from '../components/models/Mouse'
 import { ScreenOverlay } from '../components/models/ScreenOverlay'
 import { Box } from '../components/models/Box'
 import { Text3D } from '../components/models/Text3D'
@@ -34,7 +35,7 @@ export const DeskScene = ({ props }) => {
         const clicked = useRef()
         const screens = useRef()
         let drawer = useRef()
-        const [, params] = useRoute('/item/:id')
+        const [, params] = useRoute('/three-portfolio/item/:id')
         const [, setLocation] = useLocation()
         useEffect(() => {
             clicked.current = ref.current.getObjectByName(params?.id)
@@ -84,8 +85,8 @@ export const DeskScene = ({ props }) => {
         return (
             <group
                 ref={ref}
-                onClick={(e) => (e.stopPropagation(), setLocation(clicked.current === e.object ? '/' : '/item/' + e.object.parent.name))}
-                onPointerMissed={() => setLocation('/')}>
+                onClick={(e) => (e.stopPropagation(), setLocation(clicked.current === e.object ? '/three-portfolio' : '/three-portfolio/item/' + e.object.parent.name))}
+                onPointerMissed={() => setLocation('/three-portfolio')}>
                 {
                     interatives.map((props) =>
                         <Interactive
@@ -121,7 +122,7 @@ export const DeskScene = ({ props }) => {
     }
 
     return (
-        <Canvas style={{ height: 500 }} >
+        <Canvas style={{ height: '100vh' }} >
             <ambientLight intensity={1} />
             <OrbitControls
                 minAzimuthAngle={Math.PI / -5}
@@ -145,13 +146,15 @@ export const DeskScene = ({ props }) => {
                 name="Screens"
             />
 
-            <Box />
+            <Box position={[0, GOLDENRATIO / 2, 2.5]} />
 
             <Desk
                 position={[0, GOLDENRATIO / 2, 1]} />
             <Computer
                 position={[0, GOLDENRATIO / 2, 1]} />
             <Chair
+                position={[0, GOLDENRATIO / 2, 1]} />
+            <Mouse
                 position={[0, GOLDENRATIO / 2, 1]} />
         </Canvas>
     )
