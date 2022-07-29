@@ -1,6 +1,5 @@
 # An Interactive Resume 
 ## Built with react-three-fiber (r3f), a React renderer for Three.js
----
 [Click to View](https://ashetonsm.github.io/three-portfolio/)
 ---
 This project is actively being worked on! There's a lot to do:
