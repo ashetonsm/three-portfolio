@@ -25,4 +25,4 @@ export default function Model({ ...props }) {
 
 }
 
-useGLTF.preload("/ComputerTower.gltf")
+useGLTF.preload("/three-portfolio/models/ComputerTower.gltf")

@@ -21,4 +21,4 @@ export default function Model({ ...props }) {
     )
 }
 
-useGLTF.preload("/Keyboard.gltf");
+useGLTF.preload("/three-portfolio/models/Keyboard.gltf");

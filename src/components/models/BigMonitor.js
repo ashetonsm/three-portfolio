@@ -23,4 +23,4 @@ export default function Model({ ...props }) {
     )
 }
 
-useGLTF.preload("/BigMonitor.gltf");
+useGLTF.preload("/three-portfolio/models/BigMonitor.gltf");

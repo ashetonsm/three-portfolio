@@ -22,4 +22,4 @@ export default function Model({ ...props }) {
     )
 }
 
-useGLTF.preload("/Mouse.gltf");
+useGLTF.preload("/three-portfolio/models/Mouse.gltf");

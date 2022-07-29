@@ -28,4 +28,4 @@ export default function Model({ ...props }) {
   )
 }
 
-useGLTF.preload("/Desk.gltf")
+useGLTF.preload("/three-portfolio/models/Desk.gltf")

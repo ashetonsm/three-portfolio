@@ -23,4 +23,4 @@ export const Box = (props) => {
     )
 }
 
-useGLTF.preload("/Cube.gltf");
+useGLTF.preload("/three-portfolio/models/Cube.gltf");

@@ -23,4 +23,4 @@ export default function Model({ ...props }) {
     )
 }
 
-useGLTF.preload("/Chair.gltf")
+useGLTF.preload("/three-portfolio/models/Chair.gltf")

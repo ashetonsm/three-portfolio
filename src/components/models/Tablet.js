@@ -24,4 +24,4 @@ export default function Model({ ...props }) {
 
 }
 
-useGLTF.preload("/Tablet.gltf");
+useGLTF.preload("/three-portfolio/models/Tablet.gltf");
