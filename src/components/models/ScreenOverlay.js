@@ -7,12 +7,13 @@ import { TextureLoader } from "three/src/loaders/TextureLoader"
 export const ScreenOverlay = (props) => {
     const ref = useRef()
 
-    const [transparentTex, artstationTex, githubTex, itchTex] = useLoader(TextureLoader,
+    const [transparentTex, artstationTex, githubTex, itchTex, resumeTex] = useLoader(TextureLoader,
         [
             '/three-portfolio/textures/transparentPixel.png',
             '/three-portfolio/textures/artstation-logo.png',
             '/three-portfolio/textures/github-logo.png',
             '/three-portfolio/textures/itchio-logo.png',
+            '/three-portfolio/textures/resume-logo.png',
         ])
 
     const [currentTexture, setCurrentTexture] = useState(transparentTex)
@@ -20,7 +21,7 @@ export const ScreenOverlay = (props) => {
     const handleTexture = (texture) => {
         switch (texture) {
             case 0: {
-                setCurrentTexture(transparentTex)
+                setCurrentTexture(resumeTex)
                 break
             }
             case 1: {
@@ -41,21 +42,44 @@ export const ScreenOverlay = (props) => {
     }
 
     return (
-        <mesh
-            {...props}
+
+
+        <group
             ref={ref}
-            position={[0.22, 1.4, 0.9]}
-            scale={[0.25, 0.25, 0.25]}
+            {...props}
+            dispose={null}
+
             handleTexture={handleTexture}
-            rotation={new THREE.Euler(0, -0.2, 0)}
         >
-            <planeGeometry args={[1, 1, 1]} />
-            <meshStandardMaterial
-                map={currentTexture}
-                opacity={1}
-                transparent={true}
-                side={DoubleSide}
-            />
-        </mesh>
+
+            <mesh
+                position={[0.22, 1.4, 0.9]}
+                scale={[0.25, 0.25, 0.25]}
+                rotation={new THREE.Euler(0, -0.2, 0)}
+            >
+                <planeGeometry args={[1, 1, 1]} />
+                <meshStandardMaterial
+                    map={currentTexture}
+                    opacity={1}
+                    transparent={true}
+                    side={DoubleSide}
+                />
+            </mesh>
+
+            <mesh
+                position={[-0.30, 1.4, 0.96]}
+                scale={[0.2, 0.2, 0.2]}
+                rotation={new THREE.Euler(0, 0.2, 0)}
+            >
+                <planeGeometry args={[1, 1, 1]} />
+                <meshStandardMaterial
+                    map={currentTexture}
+                    opacity={1}
+                    transparent={true}
+                    side={DoubleSide}
+                />
+            </mesh>
+
+        </group>
     )
 }

@@ -25,7 +25,7 @@ export const DeskScene = ({ props }) => {
 
     const interatives = [
         { model: BigMonitor, modelName: "BigMonitor", linkText: "GitHub", url: "https://github.com/ashetonsm" },
-        { model: SmallMonitor, modelName: "SmallMonitor", linkText: "Résumé", url: "/three-portfolio/files/Mayfield_A_Resume_R.pdf" },
+        { model: SmallMonitor, modelName: "SmallMonitor", linkText: "Résumé", url: "https://www.dropbox.com/s/gplszprw31msqja/Mayfield_A_Resume_R.pdf?dl=0" },
         { model: Keyboard, modelName: "Keyboard", linkText: "Itch.io", url: "https://nnneato.itch.io/" },
         { model: Tablet, modelName: "Tablet", linkText: "ArtStation", url: "https://artstation.com/ashetonsm" },
     ]
@@ -67,14 +67,14 @@ export const DeskScene = ({ props }) => {
                             screens.current.handleTexture(3)
                             break
                         default:
-                            screens.current.handleTexture(0)
+                            screens.current.handleTexture()
                     }
                 }
 
             } else {
                 p.set(0, 1.5, 2)
                 q.identity()
-                screens.current.handleTexture(0)
+                screens.current.handleTexture()
                 drawer.current.toggleDrawer(false)
             }
         })
