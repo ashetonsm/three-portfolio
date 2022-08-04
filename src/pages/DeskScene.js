@@ -12,7 +12,8 @@ import Chair from '../components/models/Chair'
 import Mouse from '../components/models/Mouse'
 import { ScreenOverlay } from '../components/models/ScreenOverlay'
 import { Box } from '../components/models/Box'
-import { Text3D } from '../components/models/Text3D'
+import { TextDrawer } from '../components/UI/TextDrawer'
+import { NavBar } from '../components/UI/Navbar'
 import { useRoute, useLocation } from 'wouter'
 import getUuidByString from 'uuid-by-string'
 
@@ -21,7 +22,7 @@ export const DeskScene = ({ props }) => {
     const [activeItem, setActiveItem] = useState()
     const [activeURL, setActiveURL] = useState()
 
-    const interatives = [
+    const interactives = [
         { model: BigMonitor, modelName: "BigMonitor", linkText: "GitHub", url: "https://github.com/ashetonsm" },
         { model: SmallMonitor, modelName: "SmallMonitor", linkText: "Résumé", url: "https://www.dropbox.com/s/gplszprw31msqja/Mayfield_A_Resume_R.pdf?dl=0" },
         { model: Keyboard, modelName: "Keyboard", linkText: "Itch.io", url: "https://nnneato.itch.io/" },
@@ -37,7 +38,7 @@ export const DeskScene = ({ props }) => {
         const [, setLocation] = useLocation()
         useEffect(() => {
             clicked.current = ref.current.getObjectByName(params?.id)
-            drawer.current = ref.current.parent.getObjectByName("Text3D")
+            drawer.current = ref.current.parent.getObjectByName("TextDrawer")
             screens.current = ref.current.parent.getObjectByName("Screens")
 
             if (clicked.current) {
@@ -85,16 +86,15 @@ export const DeskScene = ({ props }) => {
                 ref={ref}
                 onClick={(e) => (e.stopPropagation(), setLocation(clicked.current === e.object ? '/three-portfolio' : '/three-portfolio/item/' + e.object.parent.name))}
                 onPointerMissed={() => setLocation('/three-portfolio')}>
-                {
-                    interatives.map((props) =>
-                        <Interactive
-                            key={props.modelName}
-                            name={props.modelName}
-                            model={props.model}
-                            linkText={props.linkText}
-                            url={props.url}
-                            {...props} />
-                    )}
+                {interactives.map((props) =>
+                    <Interactive
+                        key={props.modelName}
+                        name={props.modelName}
+                        model={props.model}
+                        linkText={props.linkText}
+                        url={props.url}
+                        {...props} />
+                )}
             </group>
         )
     }
@@ -128,36 +128,52 @@ export const DeskScene = ({ props }) => {
     return (
         <Canvas shadows style={{ height: '100vh' }} >
             <Suspense fallback={<Loader />}>
-            <ambientLight intensity={0.5}/>
-            <spotLight 
-                castShadow
-                shadow-bias={-0.00003}
-                position={[0, 40, 10]} 
-                angle={Math.PI / 50}
-                intensity={1} 
-                color={'#effeff'} />
+                <ambientLight intensity={0.5} />
+                <spotLight
+                    castShadow
+                    shadow-bias={-0.00003}
+                    position={[0, 40, 10]}
+                    angle={Math.PI / 50}
+                    intensity={1}
+                    color={'#effeff'} />
 
-            <OrbitControls
-                minAzimuthAngle={Math.PI / -5}
-                maxAzimuthAngle={Math.PI / 5}
-                autoRotate={false}
-                maxPolarAngle={Math.PI / 4}
-                minPolarAngle={Math.PI / 5}
-                enableZoom={false}
-                enablePan={false}
-            />
+                <OrbitControls
+                    minAzimuthAngle={Math.PI / -5}
+                    maxAzimuthAngle={Math.PI / 5}
+                    autoRotate={false}
+                    maxPolarAngle={Math.PI / 4}
+                    minPolarAngle={Math.PI / 5}
+                    enableZoom={false}
+                    enablePan={false}
+                />
 
-                <Text3D>
+                <TextDrawer>
                     {activeItem}
                     {activeURL}
-                </Text3D>
+                </TextDrawer>
+                <NavBar>
+                    {interactives.map((linkItem) =>
+                        <h1>
+                            <p>
+                                <a
+                                    href={linkItem.url}
+                                    target="_blank"
+                                    rel="noreferrer noopener"
+                                    style={{
+                                        color: '#ffffff',
+                                      }}>
+                                
+                                    {linkItem.linkText}
+                                </a>
+                            </p>
+                        </h1>
+                    )}
+                </NavBar>
 
 
                 <Interactives />
 
-                <ScreenOverlay
-                    name="Screens"
-                />
+                <ScreenOverlay name="Screens" />
 
                 <Box position={[0, GOLDENRATIO / 2, 2.5]} />
 
