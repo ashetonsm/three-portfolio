@@ -1,7 +1,7 @@
 import * as THREE from 'three'
-import { Canvas, extend, useFrame } from "@react-three/fiber"
-import { useRef, useState, useEffect } from "react"
-import { useCursor, OrbitControls } from '@react-three/drei'
+import { Canvas, useFrame } from "@react-three/fiber"
+import { useRef, useState, useEffect, Suspense } from "react"
+import { useCursor, OrbitControls, Html, useProgress, Environment } from '@react-three/drei'
 import BigMonitor from '../components/models/BigMonitor'
 import SmallMonitor from '../components/models/SmallMonitor'
 import Keyboard from '../components/models/Keyboard'
@@ -15,8 +15,6 @@ import { Box } from '../components/models/Box'
 import { Text3D } from '../components/models/Text3D'
 import { useRoute, useLocation } from 'wouter'
 import getUuidByString from 'uuid-by-string'
-
-extend({ BigMonitor, Keyboard, Tablet })
 
 export const DeskScene = ({ props }) => {
     const GOLDENRATIO = 1.61803398875
@@ -121,9 +119,24 @@ export const DeskScene = ({ props }) => {
         )
     }
 
+    function Loader() {
+        const { progress } = useProgress()
+        return <Html center>{Math.round(progress)} % loaded</Html>
+    }
+
+
     return (
-        <Canvas style={{ height: '100vh' }} >
-            <ambientLight intensity={1} />
+        <Canvas shadows style={{ height: '100vh' }} >
+            <Suspense fallback={<Loader />}>
+            <ambientLight intensity={0.5}/>
+            <spotLight 
+                castShadow
+                shadow-bias={-0.00003}
+                position={[0, 40, 10]} 
+                angle={Math.PI / 50}
+                intensity={1} 
+                color={'#effeff'} />
+
             <OrbitControls
                 minAzimuthAngle={Math.PI / -5}
                 maxAzimuthAngle={Math.PI / 5}
@@ -134,28 +147,30 @@ export const DeskScene = ({ props }) => {
                 enablePan={false}
             />
 
-            <Text3D>
-                {activeItem}
-                {activeURL}
-            </Text3D>
+                <Text3D>
+                    {activeItem}
+                    {activeURL}
+                </Text3D>
 
 
-            <Interactives />
+                <Interactives />
 
-            <ScreenOverlay
-                name="Screens"
-            />
+                <ScreenOverlay
+                    name="Screens"
+                />
 
-            <Box position={[0, GOLDENRATIO / 2, 2.5]} />
+                <Box position={[0, GOLDENRATIO / 2, 2.5]} />
 
-            <Desk
-                position={[0, GOLDENRATIO / 2, 1]} />
-            <Computer
-                position={[0, GOLDENRATIO / 2, 1]} />
-            <Chair
-                position={[0, GOLDENRATIO / 2, 1]} />
-            <Mouse
-                position={[0, GOLDENRATIO / 2, 1]} />
+                <Desk
+                    position={[0, GOLDENRATIO / 2, 1]} />
+                <Computer
+                    position={[0, GOLDENRATIO / 2, 1]} />
+                <Chair
+                    position={[0, GOLDENRATIO / 2, 1]} />
+                <Mouse
+                    position={[0, GOLDENRATIO / 2, 1]} />
+            </Suspense>
+
         </Canvas>
     )
 }
