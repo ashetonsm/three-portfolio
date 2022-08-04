@@ -14,6 +14,7 @@ export default function Model({ ...props }) {
             dispose={null}
         >
             <mesh
+                castShadow
                 geometry={nodes.Beeg_Monitor_Screen.geometry}
                 material={materials["Big Monitor"]}
                 position={[0.21, 0.5, -0.12]}

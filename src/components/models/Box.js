@@ -11,9 +11,9 @@ export const Box = (props) => {
         <group
             ref={ref}
             {...props}
-            dispose={null}>
+            dispose={null}
+            >
             <mesh
-                castShadow
                 receiveShadow
                 geometry={nodes.Cube.geometry}
                 material={materials.Background}

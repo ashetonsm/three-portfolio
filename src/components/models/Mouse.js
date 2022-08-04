@@ -13,7 +13,6 @@ export default function Model({ ...props }) {
 
             <mesh
                 castShadow
-                receiveShadow
                 geometry={nodes.Mouse.geometry}
                 material={materials.Accessories}
                 position={[0.31, 0.39, 0.12]}

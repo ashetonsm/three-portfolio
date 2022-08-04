@@ -14,7 +14,6 @@ export default function Model({ ...props }) {
 
             <mesh
                 castShadow
-                receiveShadow
                 geometry={nodes.Tablet.geometry}
                 material={materials.Tablet}
                 position={[0.38, 0.41, 0.01]}

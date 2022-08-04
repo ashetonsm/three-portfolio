@@ -13,14 +13,13 @@ export default function Model({ ...props }) {
             ref={group}
             {...props}
             dispose={null}
-            >
-
+        >
             <mesh
+                castShadow
                 geometry={nodes.Small_Monitor_Screen.geometry}
                 material={materials["Small Monitor"]}
                 position={[-0.31, 0.51, -0.07]}
                 rotation={new THREE.Euler(0, 0.2, 0)}
-
             />
         </group>
     )

@@ -42,8 +42,6 @@ export const ScreenOverlay = (props) => {
     }
 
     return (
-
-
         <group
             ref={ref}
             {...props}
