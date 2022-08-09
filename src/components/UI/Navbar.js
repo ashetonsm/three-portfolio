@@ -2,7 +2,6 @@ import * as THREE from 'three'
 import { useFrame } from "@react-three/fiber"
 import React, { useRef, useEffect, useState } from 'react'
 import { Html, useCursor } from '@react-three/drei'
-import { useRoute, useLocation } from 'wouter'
 import { useSpring, animated } from '@react-spring/three'
 
 export const NavBar = (props) => {
@@ -22,8 +21,6 @@ export const NavBar = (props) => {
   useCursor(hovered)
 
   const ref = useRef()
-  const clicked = useRef()
-  const [, params] = useRoute('/three-portfolio/item/:id')
 
   const screens = useRef()
   let drawer = useRef()
@@ -38,7 +35,7 @@ export const NavBar = (props) => {
   q.identity()
 
   const setCoordinates = (keyword) => {
-    
+
     switch (keyword) {
       case "GitHub": {
         console.log(keyword)
@@ -89,13 +86,12 @@ export const NavBar = (props) => {
   }
 
   useEffect(() => {
-    console.log("Navbar useEffect")
-      bigMonitor.current = ref.current.parent.getObjectByProperty("friendlyName", "BigMonitor")
-      smallMonitor.current = ref.current.parent.getObjectByProperty("friendlyName", "SmallMonitor")
-      keyboard.current = ref.current.parent.getObjectByProperty("friendlyName", "Keyboard")
-      tablet.current = ref.current.parent.getObjectByProperty("friendlyName", "Tablet")
-      screens.current = ref.current.parent.getObjectByName("Screens")
-      drawer.current = ref.current.parent.getObjectByName("TextDrawer")
+    bigMonitor.current = ref.current.parent.getObjectByProperty("friendlyName", "BigMonitor")
+    smallMonitor.current = ref.current.parent.getObjectByProperty("friendlyName", "SmallMonitor")
+    keyboard.current = ref.current.parent.getObjectByProperty("friendlyName", "Keyboard")
+    tablet.current = ref.current.parent.getObjectByProperty("friendlyName", "Tablet")
+    screens.current = ref.current.parent.getObjectByName("Screens")
+    drawer.current = ref.current.parent.getObjectByName("TextDrawer")
   })
 
   useFrame((state) => {
@@ -123,7 +119,7 @@ export const NavBar = (props) => {
             textAlign: 'center',
             paddingTop: '30vh',
           }}
-          >
+        >
 
           {links.map((linkItem) =>
             <h1
@@ -132,7 +128,7 @@ export const NavBar = (props) => {
                 color: '#FFFFFF',
               }}
               onClick={() => setCoordinates(linkItem.linkText)}
-              >
+            >
               {linkItem.linkText}
             </h1>
           )}
