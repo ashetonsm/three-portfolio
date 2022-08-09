@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { Canvas, useFrame } from "@react-three/fiber"
 import { useRef, useState, useEffect, Suspense } from "react"
-import { useCursor, OrbitControls, Html, useProgress, Environment } from '@react-three/drei'
+import { useCursor, OrbitControls, Html, useProgress } from '@react-three/drei'
 import BigMonitor from '../components/models/BigMonitor'
 import SmallMonitor from '../components/models/SmallMonitor'
 import Keyboard from '../components/models/Keyboard'
@@ -17,23 +17,29 @@ import { NavBar } from '../components/UI/Navbar'
 import { useRoute, useLocation } from 'wouter'
 import getUuidByString from 'uuid-by-string'
 
-export const DeskScene = ({ props }) => {
+export const DeskScene = () => {
     const GOLDENRATIO = 1.61803398875
     const [activeItem, setActiveItem] = useState()
     const [activeURL, setActiveURL] = useState()
 
     const interactives = [
         { model: BigMonitor, modelName: "BigMonitor", linkText: "GitHub", url: "https://github.com/ashetonsm" },
-        { model: SmallMonitor, modelName: "SmallMonitor", linkText: "Résumé", url: "https://www.dropbox.com/s/gplszprw31msqja/Mayfield_A_Resume_R.pdf?dl=0" },
+        { model: SmallMonitor, modelName: "SmallMonitor", linkText: "Resumé", url: "https://www.dropbox.com/s/gplszprw31msqja/Mayfield_A_Resume_R.pdf?dl=0" },
         { model: Keyboard, modelName: "Keyboard", linkText: "Itch.io", url: "https://nnneato.itch.io/" },
         { model: Tablet, modelName: "Tablet", linkText: "ArtStation", url: "https://artstation.com/ashetonsm" },
     ]
+
+    const setActive = (newItem, newURL) => {
+        setActiveItem(newItem)
+        setActiveURL(newURL)
+    }
 
     function Interactives({ q = new THREE.Quaternion(), p = new THREE.Vector3() }) {
         const ref = useRef()
         const clicked = useRef()
         const screens = useRef()
         let drawer = useRef()
+
         const [, params] = useRoute('/three-portfolio/item/:id')
         const [, setLocation] = useLocation()
         useEffect(() => {
@@ -47,8 +53,7 @@ export const DeskScene = ({ props }) => {
                     clicked.current.children[0].localToWorld(p.set(0, GOLDENRATIO / 7, 0.5))
                     clicked.current.children[0].getWorldQuaternion(q)
 
-                    setActiveItem(clicked.current.parent.linkText)
-                    setActiveURL(clicked.current.parent.url)
+                    setActive(clicked.current.parent.linkText, clicked.current.parent.url)
 
                     drawer.current.toggleDrawer(true)
 
@@ -70,22 +75,24 @@ export const DeskScene = ({ props }) => {
                     }
                 }
 
-            } else {
+            } 
+            else {
                 p.set(0, 1.5, 2)
                 q.identity()
                 screens.current.handleTexture()
                 drawer.current.toggleDrawer(false)
             }
         })
-        useFrame((state, dt) => {
+        useFrame((state) => {
             state.camera.position.lerp(p, 0.025)
             state.camera.quaternion.slerp(q, 0.025)
         })
         return (
             <group
                 ref={ref}
-                onClick={(e) => (e.stopPropagation(), setLocation(clicked.current === e.object ? '/three-portfolio' : '/three-portfolio/item/' + e.object.parent.name))}
-                onPointerMissed={() => setLocation('/three-portfolio')}>
+                onClick={(e) => (setLocation(clicked.current === e.object ? '/three-portfolio' : '/three-portfolio/item/' + e.object.parent.name))}
+                onPointerMissed={() => setLocation('/three-portfolio')}
+                >
                 {interactives.map((props) =>
                     <Interactive
                         key={props.modelName}
@@ -104,14 +111,12 @@ export const DeskScene = ({ props }) => {
         const name = getUuidByString(modelName)
         const friendlyName = modelName
         useCursor(hovered)
-        useFrame((state) => {
-        })
         return (
             <group {...props} url={url}>
                 < props.model
                     name={name}
                     friendlyName={friendlyName}
-                    onPointerOver={(e) => (e.stopPropagation(), hover(true))}
+                    onPointerOver={(e) => (hover(true))}
                     position={[0, GOLDENRATIO / 2, 1]}
                     onPointerOut={() => hover(false)}
                 />
@@ -151,25 +156,8 @@ export const DeskScene = ({ props }) => {
                     {activeItem}
                     {activeURL}
                 </TextDrawer>
-                <NavBar>
-                    {interactives.map((linkItem) =>
-                        <h1>
-                            <p>
-                                <a
-                                    href={linkItem.url}
-                                    target="_blank"
-                                    rel="noreferrer noopener"
-                                    style={{
-                                        color: '#ffffff',
-                                      }}>
-                                
-                                    {linkItem.linkText}
-                                </a>
-                            </p>
-                        </h1>
-                    )}
-                </NavBar>
 
+                <NavBar onSelect={setActive}/>
 
                 <Interactives />
 
