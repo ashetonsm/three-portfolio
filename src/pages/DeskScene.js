@@ -14,13 +14,14 @@ import { ScreenOverlay } from '../components/models/ScreenOverlay'
 import { Box } from '../components/models/Box'
 import { TextDrawer } from '../components/UI/TextDrawer'
 import { NavBar } from '../components/UI/Navbar'
-import { useRoute, useLocation } from 'wouter'
 import getUuidByString from 'uuid-by-string'
 
 export const DeskScene = () => {
     const GOLDENRATIO = 1.61803398875
     const [activeItem, setActiveItem] = useState()
     const [activeURL, setActiveURL] = useState()
+    const [currentItem, setCurrentItem] = useState(null)
+    const [currentParent, setCurrentParent] = useState(null)
 
     const interactives = [
         { model: BigMonitor, modelName: "BigMonitor", linkText: "GitHub", url: "https://github.com/ashetonsm" },
@@ -34,54 +35,58 @@ export const DeskScene = () => {
         setActiveURL(newURL)
     }
 
+    const setCurrent = (newCurrent, newCurrentParent) => {
+        setCurrentItem(newCurrent)
+        setCurrentParent(newCurrentParent)
+    }
+
     function Interactives({ q = new THREE.Quaternion(), p = new THREE.Vector3() }) {
+
+
         const ref = useRef()
-        const clicked = useRef()
         const screens = useRef()
         let drawer = useRef()
 
-        const [, params] = useRoute('/three-portfolio/item/:id')
-        const [, setLocation] = useLocation()
         useEffect(() => {
-            clicked.current = ref.current.getObjectByName(params?.id)
+
             drawer.current = ref.current.parent.getObjectByName("TextDrawer")
             screens.current = ref.current.parent.getObjectByName("Screens")
 
-            if (clicked.current) {
-                if (clicked.current.children.length !== 0) {
-                    clicked.current.children[0].updateWorldMatrix(true, true)
-                    clicked.current.children[0].localToWorld(p.set(0, GOLDENRATIO / 7, 0.5))
-                    clicked.current.children[0].getWorldQuaternion(q)
-
-                    setActive(clicked.current.parent.linkText, clicked.current.parent.url)
-
-                    drawer.current.toggleDrawer(true)
-
-                    switch (clicked.current.friendlyName) {
-                        case "SmallMonitor":
-                            screens.current.handleTexture(0)
-                            break
-                        case "Tablet":
-                            screens.current.handleTexture(1)
-                            break
-                        case "BigMonitor":
-                            screens.current.handleTexture(2)
-                            break
-                        case "Keyboard":
-                            screens.current.handleTexture(3)
-                            break
-                        default:
-                            screens.current.handleTexture()
-                    }
-                }
-
-            } 
-            else {
+            if (currentItem === null) {
+                // Set default location
                 p.set(0, 1.5, 2)
                 q.identity()
-                screens.current.handleTexture()
                 drawer.current.toggleDrawer(false)
+                screens.current.handleTexture()
+
+            } else {
+                // console.log("currentItem !== null")
+                // console.log("currentItem is " + currentParent.friendlyName)
+                drawer.current.toggleDrawer(true)
+
+                switch (currentParent.friendlyName) {
+                    case "SmallMonitor":
+                        screens.current.handleTexture(0)
+                        break
+                    case "Tablet":
+                        screens.current.handleTexture(1)
+                        break
+                    case "BigMonitor":
+                        screens.current.handleTexture(2)
+                        break
+                    case "Keyboard":
+                        screens.current.handleTexture(3)
+                        break
+                    default:
+                        screens.current.handleTexture()
+                }
+
+                setActive(currentParent.linkText, currentParent.linkUrl)
+                currentItem.updateWorldMatrix(true, true)
+                currentItem.localToWorld(p.set(0, GOLDENRATIO / 14, 2.5))
+                currentItem.getWorldQuaternion(q)
             }
+
         })
         useFrame((state) => {
             state.camera.position.lerp(p, 0.025)
@@ -90,9 +95,9 @@ export const DeskScene = () => {
         return (
             <group
                 ref={ref}
-                onClick={(e) => (setLocation(clicked.current === e.object ? '/three-portfolio' : '/three-portfolio/item/' + e.object.parent.name))}
-                onPointerMissed={() => setLocation('/three-portfolio')}
-                >
+                onClick={(e) => setCurrent(e.object, e.object.parent)}
+                onPointerMissed={() => setCurrent(null, null)}
+            >
                 {interactives.map((props) =>
                     <Interactive
                         key={props.modelName}
@@ -106,16 +111,18 @@ export const DeskScene = () => {
         )
     }
 
-    function Interactive({ url, modelName, ...props }) {
+    function Interactive({ url, modelName, linkText, ...props }) {
         const [hovered, hover] = useState(false)
         const name = getUuidByString(modelName)
         const friendlyName = modelName
         useCursor(hovered)
         return (
-            <group {...props} url={url}>
+            <group {...props}>
                 < props.model
                     name={name}
                     friendlyName={friendlyName}
+                    linkText={linkText}
+                    linkUrl={url}
                     onPointerOver={(e) => (hover(true))}
                     position={[0, GOLDENRATIO / 2, 1]}
                     onPointerOut={() => hover(false)}
@@ -157,7 +164,7 @@ export const DeskScene = () => {
                     {activeURL}
                 </TextDrawer>
 
-                <NavBar onSelect={setActive}/>
+                <NavBar onSelect={setActive} />
 
                 <Interactives />
 
