@@ -1,5 +1,6 @@
+import * as THREE from 'three'
 import React, { useRef } from "react";
-import { useGLTF } from "@react-three/drei";
+import { Html, useGLTF } from "@react-three/drei";
 
 export default function Model({ ...props }) {
 
@@ -12,12 +13,23 @@ export default function Model({ ...props }) {
             {...props}
             dispose={null}>
 
-            <mesh
-                castShadow
-                geometry={nodes.Tablet.geometry}
-                material={materials.Tablet}
-                position={[0.38, 0.41, 0.01]}
-            />
+            {props.name == "copy" ?
+                <mesh
+                    position={[0.2, 0.6, 0]}
+                    scale={[0.1, 0.1, 1]} >
+                    <planeGeometry />
+                    <Html>
+                        <h1>ArtStation</h1>
+                    </Html>
+                </mesh>
+                :
+                <mesh
+                    castShadow
+                    geometry={nodes.Tablet.geometry}
+                    material={materials.Tablet}
+                    position={[0.38, 0.41, 0.01]}
+                />
+            }
         </group>
     )
 
