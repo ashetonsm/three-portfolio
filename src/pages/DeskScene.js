@@ -13,7 +13,6 @@ import Mouse from '../components/models/Mouse'
 import { ScreenOverlay } from '../components/models/ScreenOverlay'
 import { Box } from '../components/models/Box'
 import { TextDrawer } from '../components/UI/TextDrawer'
-import { NavBar } from '../components/UI/Navbar'
 import getUuidByString from 'uuid-by-string'
 
 export const DeskScene = () => {
@@ -61,8 +60,6 @@ export const DeskScene = () => {
                 screens.current.handleTexture()
 
             } else {
-                // console.log("currentItem !== null")
-                // console.log("currentItem is " + currentParent.friendlyName)
                 drawer.current.toggleDrawer(true)
 
                 switch (currentParent.friendlyName) {
@@ -84,7 +81,7 @@ export const DeskScene = () => {
 
                 setActive(currentParent.linkText, currentParent.linkUrl)
                 currentItem.updateWorldMatrix(true, true)
-                currentItem.localToWorld(p.set(0, GOLDENRATIO / 14, 2.5))
+                currentItem.localToWorld(p.set(0, GOLDENRATIO / 7, 2.5))
                 currentItem.getWorldQuaternion(q)
             }
 
@@ -221,7 +218,7 @@ export const DeskScene = () => {
                     maxAzimuthAngle={Math.PI / 5}
                     autoRotate={false}
                     maxPolarAngle={Math.PI / 4}
-                    minPolarAngle={Math.PI / 5}
+                    minPolarAngle={Math.PI / 4}
                     enableZoom={false}
                     enablePan={false}
                 />
