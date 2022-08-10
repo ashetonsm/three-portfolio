@@ -36,12 +36,13 @@ export const DeskScene = () => {
     }
 
     const setCurrent = (newCurrent, newCurrentParent) => {
+
+        console.log(newCurrent)
         setCurrentItem(newCurrent)
         setCurrentParent(newCurrentParent)
     }
 
     function Interactives({ q = new THREE.Quaternion(), p = new THREE.Vector3() }) {
-
 
         const ref = useRef()
         const screens = useRef()
@@ -93,6 +94,7 @@ export const DeskScene = () => {
             state.camera.quaternion.slerp(q, 0.025)
         })
         return (
+            <>
             <group
                 ref={ref}
                 onClick={(e) => setCurrent(e.object, e.object.parent)}
@@ -108,6 +110,54 @@ export const DeskScene = () => {
                         {...props} />
                 )}
             </group>
+
+            {/* This group is for the text links */}
+            <group
+                ref={ref}
+                onClick={(e) => setCurrent(e.object, e.object.parent)}
+                onPointerMissed={() => setCurrent(null, null)}
+            >
+                {interactives.map((props) =>
+
+                    props.modelName == "BigMonitor" ? 
+                    <LinkItem
+                        key={props.modelName}
+                        name={props.modelName}
+                        model={props.model}
+                        linkText={props.linkText}
+                        url={props.url}
+                        {...props} /> :
+
+                        
+                    props.modelName == "SmallMonitor" ? 
+                    <LinkItem
+                        key={props.modelName}
+                        name={props.modelName}
+                        model={props.model}
+                        linkText={props.linkText}
+                        url={props.url}
+                        {...props} /> :
+
+                    props.modelName == "Keyboard" ? 
+                    <LinkItem
+                        key={props.modelName}
+                        name={props.modelName}
+                        model={props.model}
+                        linkText={props.linkText}
+                        url={props.url}
+                        {...props} /> :
+
+                    props.modelName == "Tablet" ? 
+                    <LinkItem
+                        key={props.modelName}
+                        name={props.modelName}
+                        model={props.model}
+                        linkText={props.linkText}
+                        url={props.url}
+                        {...props} /> : null
+                )}
+            </group>
+            </>
         )
     }
 
@@ -128,6 +178,23 @@ export const DeskScene = () => {
                     onPointerOut={() => hover(false)}
                 />
             </group>
+        )
+    }
+
+    function LinkItem({ url, modelName, linkText, ...props }) {
+        const [hovered, hover] = useState(false)
+        const friendlyName = modelName
+        useCursor(hovered)
+        return (
+                < props.model  {...props}
+                    name={"copy"}
+                    friendlyName={friendlyName}
+                    linkText={linkText}
+                    linkUrl={url}
+                    onPointerOver={(e) => (hover(true))}
+                    position={[0, 1, 1]}
+                    onPointerOut={() => hover(false)}
+                />
         )
     }
 
@@ -163,8 +230,6 @@ export const DeskScene = () => {
                     {activeItem}
                     {activeURL}
                 </TextDrawer>
-
-                <NavBar onSelect={setActive} />
 
                 <Interactives />
 
