@@ -116,7 +116,7 @@ export const DeskScene = () => {
             >
                 {interactives.map((props) =>
 
-                    props.modelName == "BigMonitor" ? 
+                    props.modelName === "BigMonitor" ? 
                     <LinkItem
                         key={props.modelName}
                         name={props.modelName}
@@ -126,7 +126,7 @@ export const DeskScene = () => {
                         {...props} /> :
 
                         
-                    props.modelName == "SmallMonitor" ? 
+                    props.modelName === "SmallMonitor" ? 
                     <LinkItem
                         key={props.modelName}
                         name={props.modelName}
@@ -135,7 +135,7 @@ export const DeskScene = () => {
                         url={props.url}
                         {...props} /> :
 
-                    props.modelName == "Keyboard" ? 
+                    props.modelName === "Keyboard" ? 
                     <LinkItem
                         key={props.modelName}
                         name={props.modelName}
@@ -144,7 +144,7 @@ export const DeskScene = () => {
                         url={props.url}
                         {...props} /> :
 
-                    props.modelName == "Tablet" ? 
+                    props.modelName === "Tablet" ? 
                     <LinkItem
                         key={props.modelName}
                         name={props.modelName}

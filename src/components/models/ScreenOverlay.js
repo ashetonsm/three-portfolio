@@ -1,4 +1,4 @@
-import * as THREE from 'three'
+// import * as THREE from 'three'
 import React, { useRef, useState } from "react";
 import { useLoader } from "@react-three/fiber";
 import { DoubleSide } from "three";
