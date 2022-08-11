@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { Html } from '@react-three/drei'
 import { useSpring, animated } from '@react-spring/three'
 
-export const Text3D = ({ children, props }) => {
+export const TextDrawer = ({ children, props }) => {
   const ref = useRef()
   const [showDrawer, setShowDrawer] = useState(false)
 
@@ -33,7 +33,7 @@ export const Text3D = ({ children, props }) => {
         ref={ref}
         position={position}
         toggleDrawer={toggleDrawer}
-        name="Text3D" >
+        name="TextDrawer" >
 
         <Html {...props}
           color='#000'>

@@ -1,7 +1,7 @@
-import * as THREE from 'three'
-import React, { useRef, useState } from "react";
-import { useLoader } from "@react-three/fiber";
-import { DoubleSide } from "three";
+// import * as THREE from 'three'
+import React, { useRef, useState } from "react"
+import { useLoader } from "@react-three/fiber"
+import { DoubleSide } from "three"
 import { TextureLoader } from "three/src/loaders/TextureLoader"
 
 export const ScreenOverlay = (props) => {
@@ -42,8 +42,6 @@ export const ScreenOverlay = (props) => {
     }
 
     return (
-
-
         <group
             ref={ref}
             {...props}
@@ -55,7 +53,6 @@ export const ScreenOverlay = (props) => {
             <mesh
                 position={[0.22, 1.4, 0.9]}
                 scale={[0.25, 0.25, 0.25]}
-                rotation={new THREE.Euler(0, -0.2, 0)}
             >
                 <planeGeometry args={[1, 1, 1]} />
                 <meshStandardMaterial
@@ -69,7 +66,6 @@ export const ScreenOverlay = (props) => {
             <mesh
                 position={[-0.30, 1.4, 0.96]}
                 scale={[0.2, 0.2, 0.2]}
-                rotation={new THREE.Euler(0, 0.2, 0)}
             >
                 <planeGeometry args={[1, 1, 1]} />
                 <meshStandardMaterial
