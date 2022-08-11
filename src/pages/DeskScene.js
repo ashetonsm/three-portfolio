@@ -35,8 +35,6 @@ export const DeskScene = () => {
     }
 
     const setCurrent = (newCurrent, newCurrentParent) => {
-
-        console.log(newCurrent)
         setCurrentItem(newCurrent)
         setCurrentParent(newCurrentParent)
     }
@@ -58,6 +56,7 @@ export const DeskScene = () => {
                 q.identity()
                 drawer.current.toggleDrawer(false)
                 screens.current.handleTexture()
+                setActive(null, null)
 
             } else {
                 drawer.current.toggleDrawer(true)
@@ -81,7 +80,7 @@ export const DeskScene = () => {
 
                 setActive(currentParent.linkText, currentParent.linkUrl)
                 currentItem.updateWorldMatrix(true, true)
-                currentItem.localToWorld(p.set(0, GOLDENRATIO / 7, 2.5))
+                currentItem.localToWorld(p.set(0, GOLDENRATIO / 4, 2.5))
                 currentItem.getWorldQuaternion(q)
             }
 
@@ -189,7 +188,7 @@ export const DeskScene = () => {
                     linkText={linkText}
                     linkUrl={url}
                     onPointerOver={(e) => (hover(true))}
-                    position={[0, 1, 1]}
+                    position={[0, 0.95, 0.55]}
                     onPointerOut={() => hover(false)}
                 />
         )
@@ -207,7 +206,7 @@ export const DeskScene = () => {
                 <ambientLight intensity={0.5} />
                 <spotLight
                     castShadow
-                    shadow-bias={-0.00003}
+                    shadow-bias={-0.00002}
                     position={[0, 40, 10]}
                     angle={Math.PI / 50}
                     intensity={1}
@@ -238,8 +237,8 @@ export const DeskScene = () => {
                     position={[0, GOLDENRATIO / 2, 1]} />
                 <Computer
                     position={[0, GOLDENRATIO / 2, 1]} />
-                <Chair
-                    position={[0, GOLDENRATIO / 2, 1]} />
+                {/* <Chair
+                    position={[0, GOLDENRATIO / 2, 1]} /> */}
                 <Mouse
                     position={[0, GOLDENRATIO / 2, 1]} />
             </Suspense>
