@@ -1,11 +1,11 @@
-import React, { useRef } from "react";
-import { useGLTF } from "@react-three/drei";
-import { useLoader } from "@react-three/fiber";
+import React, { useRef } from "react"
+import { useGLTF } from "@react-three/drei"
+import { useLoader } from "@react-three/fiber"
 import { TextureLoader } from "three/src/loaders/TextureLoader"
 
 export default function Model({ ...props }) {
 
-    const group = useRef();
+    const group = useRef()
     const { nodes, materials } = useGLTF("/three-portfolio/models/Tablet.gltf")
     const imgTex = useLoader(TextureLoader, '/three-portfolio/textures/artstation-text.png')
 
@@ -37,4 +37,4 @@ export default function Model({ ...props }) {
 
 }
 
-useGLTF.preload("/three-portfolio/models/Tablet.gltf");
+useGLTF.preload("/three-portfolio/models/Tablet.gltf")

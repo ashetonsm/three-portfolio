@@ -1,11 +1,11 @@
 import * as THREE from 'three'
-import React, { useRef } from "react";
-import { useGLTF } from "@react-three/drei";
+import React, { useRef } from "react"
+import { useGLTF } from "@react-three/drei"
 
 export const Box = (props) => {
 
     const ref = useRef()
-    const { nodes, materials } = useGLTF("/three-portfolio/models/Cube.gltf");
+    const { nodes, materials } = useGLTF("/three-portfolio/models/Cube.gltf")
 
     return (
         <group
@@ -23,4 +23,4 @@ export const Box = (props) => {
     )
 }
 
-useGLTF.preload("/three-portfolio/models/Cube.gltf");
+useGLTF.preload("/three-portfolio/models/Cube.gltf")

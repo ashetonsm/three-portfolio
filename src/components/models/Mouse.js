@@ -1,9 +1,9 @@
-import React, { useRef } from "react";
-import { useGLTF } from "@react-three/drei";
+import React, { useRef } from "react"
+import { useGLTF } from "@react-three/drei"
 
 export default function Model({ ...props }) {
     const group = useRef();
-    const { nodes, materials } = useGLTF("/three-portfolio/models/Mouse.gltf");
+    const { nodes, materials } = useGLTF("/three-portfolio/models/Mouse.gltf")
 
     return (
         <group
@@ -21,4 +21,4 @@ export default function Model({ ...props }) {
     )
 }
 
-useGLTF.preload("/three-portfolio/models/Mouse.gltf");
+useGLTF.preload("/three-portfolio/models/Mouse.gltf")
