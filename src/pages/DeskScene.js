@@ -16,7 +16,6 @@ import { TextDrawer } from '../components/UI/TextDrawer'
 import getUuidByString from 'uuid-by-string'
 
 export const DeskScene = () => {
-    const GOLDENRATIO = 1.61803398875
     const [activeItem, setActiveItem] = useState()
     const [activeURL, setActiveURL] = useState()
     const [currentItem, setCurrentItem] = useState(null)
@@ -52,7 +51,7 @@ export const DeskScene = () => {
 
             if (currentItem === null) {
                 // Set default location
-                p.set(0, 1.5, 2)
+                p.set(0, 1, 3)
                 q.identity()
                 drawer.current.toggleDrawer(false)
                 screens.current.handleTexture()
@@ -80,7 +79,7 @@ export const DeskScene = () => {
 
                 setActive(currentParent.linkText, currentParent.linkUrl)
                 currentItem.updateWorldMatrix(true, true)
-                currentItem.localToWorld(p.set(0, GOLDENRATIO / 4, 2.5))
+                currentItem.localToWorld(p.set(0, 0, 2.5))
                 currentItem.getWorldQuaternion(q)
             }
 
@@ -90,7 +89,6 @@ export const DeskScene = () => {
             state.camera.quaternion.slerp(q, 0.025)
         })
         return (
-            <>
             <group
                 ref={ref}
                 onClick={(e) => setCurrent(e.object, e.object.parent)}
@@ -105,55 +103,7 @@ export const DeskScene = () => {
                         url={props.url}
                         {...props} />
                 )}
-            </group>
-
-            {/* This group is for the text links */}
-            <group
-                ref={ref}
-                onClick={(e) => setCurrent(e.object, e.object.parent)}
-                onPointerMissed={() => setCurrent(null, null)}
-            >
-                {interactives.map((props) =>
-
-                    props.modelName === "BigMonitor" ? 
-                    <LinkItem
-                        key={props.modelName}
-                        name={props.modelName}
-                        model={props.model}
-                        linkText={props.linkText}
-                        url={props.url}
-                        {...props} /> :
-
-                        
-                    props.modelName === "SmallMonitor" ? 
-                    <LinkItem
-                        key={props.modelName}
-                        name={props.modelName}
-                        model={props.model}
-                        linkText={props.linkText}
-                        url={props.url}
-                        {...props} /> :
-
-                    props.modelName === "Keyboard" ? 
-                    <LinkItem
-                        key={props.modelName}
-                        name={props.modelName}
-                        model={props.model}
-                        linkText={props.linkText}
-                        url={props.url}
-                        {...props} /> :
-
-                    props.modelName === "Tablet" ? 
-                    <LinkItem
-                        key={props.modelName}
-                        name={props.modelName}
-                        model={props.model}
-                        linkText={props.linkText}
-                        url={props.url}
-                        {...props} /> : null
-                )}
-            </group>
-            </>
+                </group>
         )
     }
 
@@ -170,27 +120,10 @@ export const DeskScene = () => {
                     linkText={linkText}
                     linkUrl={url}
                     onPointerOver={(e) => (hover(true))}
-                    position={[0, GOLDENRATIO / 2, 1]}
+                    position={[0, 0, 1]}
                     onPointerOut={() => hover(false)}
                 />
             </group>
-        )
-    }
-
-    function LinkItem({ url, modelName, linkText, ...props }) {
-        const [hovered, hover] = useState(false)
-        const friendlyName = modelName
-        useCursor(hovered)
-        return (
-                < props.model  {...props}
-                    name={"copy"}
-                    friendlyName={friendlyName}
-                    linkText={linkText}
-                    linkUrl={url}
-                    onPointerOver={(e) => (hover(true))}
-                    position={[0, 0.95, 0.55]}
-                    onPointerOut={() => hover(false)}
-                />
         )
     }
 
@@ -212,16 +145,6 @@ export const DeskScene = () => {
                     intensity={1}
                     color={'#effeff'} />
 
-                <OrbitControls
-                    minAzimuthAngle={Math.PI / -5}
-                    maxAzimuthAngle={Math.PI / 5}
-                    autoRotate={false}
-                    maxPolarAngle={Math.PI / 4}
-                    minPolarAngle={Math.PI / 4}
-                    enableZoom={false}
-                    enablePan={false}
-                />
-
                 <TextDrawer>
                     {activeItem}
                     {activeURL}
@@ -231,16 +154,16 @@ export const DeskScene = () => {
 
                 <ScreenOverlay name="Screens" />
 
-                <Box position={[0, GOLDENRATIO / 2, 2.5]} />
+                <Box position={[0, 0.05, 2.5]} />
 
                 <Desk
-                    position={[0, GOLDENRATIO / 2, 1]} />
+                    position={[0, 0, 1]} />
                 <Computer
-                    position={[0, GOLDENRATIO / 2, 1]} />
+                    position={[0, 0, 1]} />
                 {/* <Chair
-                    position={[0, GOLDENRATIO / 2, 1]} /> */}
+                    position={[0, 0, 1]} /> */}
                 <Mouse
-                    position={[0, GOLDENRATIO / 2, 1]} />
+                    position={[0, 0, 1]} />
             </Suspense>
 
         </Canvas>
