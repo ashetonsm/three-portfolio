@@ -9,7 +9,6 @@ export const NavBar = (props) => {
         border: 'none',
         cursor: 'pointer',
         textDecoration: 'underline',
-        display: 'inline',
         fontSize: '1.25em',
       }}
       onClick={(e) => props.sendMessage(props.name, props.linkText, props.url)}>
