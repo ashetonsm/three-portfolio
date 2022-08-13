@@ -25,24 +25,26 @@ export const TextDrawer = ({ children, props }) => {
               backgroundColor: '#ffffff80',
               position: 'absolute',
               left: '-50vw',
-              top: '-50vh',
-              width: '30vw',
-              height: '100vh',
+              top: '20vh',
+              width: '100vw',
+              height: '20vh',
               overflowWrap: 'anywhere',
               textAlign: 'center',
               padding: 5,
               visibility: showDrawer ? 'visible' : 'hidden',
 
             }}>
-            <h1>
+            <h1 style={{
+              fontSize: '2em',
+            }}>
               {children[0]}
             </h1>
             <h2>
               <a
                 href={children[1]}
                 target="_blank"
-                rel="noreferrer noopener"
-              >
+                rel="noreferrer noopener">
+
                 {children[1]}
               </a>
             </h2>
