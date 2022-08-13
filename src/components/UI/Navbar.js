@@ -1,8 +1,19 @@
-import * as THREE from 'three'
-import { useFrame } from "@react-three/fiber"
-import React, { useRef, useEffect, useState } from 'react'
-import { Html, useCursor } from '@react-three/drei'
-import { useSpring, animated } from '@react-spring/three'
+import React from 'react'
 
 export const NavBar = (props) => {
+
+  return (
+      <button 
+      style={{
+        backgroundColor: 'transparent',
+        border: 'none',
+        cursor: 'pointer',
+        textDecoration: 'underline',
+        display: 'inline',
+        fontSize: '1.25em',
+      }}
+      onClick={(e) => props.sendMessage(props.name, props.linkText, props.url)}>
+        {props.linkText}
+      </button>
+  )
 }
