@@ -51,7 +51,7 @@ export const ScreenOverlay = (props) => {
         >
 
             <mesh
-                position={[0.22, 0.6, 0.9]}
+                position={[0.2, 0.6, -0.1]}
                 scale={[0.25, 0.25, 0.25]}
             >
                 <planeGeometry args={[1, 1, 1]} />
@@ -64,7 +64,7 @@ export const ScreenOverlay = (props) => {
             </mesh>
 
             <mesh
-                position={[-0.30, 0.6, 0.96]}
+                position={[-0.30, 0.58, -0.04]}
                 scale={[0.2, 0.2, 0.2]}
             >
                 <planeGeometry args={[1, 1, 1]} />
