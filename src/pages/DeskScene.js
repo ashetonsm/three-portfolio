@@ -21,7 +21,7 @@ export const DeskScene = () => {
     const camZ = 0.90
 
     const [activeItem, setActiveItem] = useState("Welcome!")
-    const [activeURL, setActiveURL] = useState("Please click an item or a link.")
+    const [activeURL, setActiveURL] = useState("Please click a model or a link.")
     const [currentItem, setCurrentItem] = useState(null)
 
     const interactives = [
