@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react'
 import { Html } from '@react-three/drei'
-import { useSpring, animated } from '@react-spring/three'
 
 export const TextDrawer = ({ children, props }) => {
   const ref = useRef()
@@ -11,27 +10,11 @@ export const TextDrawer = ({ children, props }) => {
   }
 
   function RenderText() {
-    const { position } = useSpring({
-      to: {
-        position:
-          showDrawer ? [0, 0, 0] :
-            !showDrawer && children[0] === undefined ?
-              [-50, 0, 0] : [-50, 0, 0]
-      },
-      from: {
-        position:
-          showDrawer ? [-50, 0, 0] :
-            !showDrawer && children[0] === undefined ?
-              [-50, 0, 0] : [0, 0, 0]
-      },
-      config: showDrawer ? { mass: 2, tension: 600, friction: 80 } :
-        { mass: 2, tension: 200, friction: 300 }
-    })
 
     return (
-      <animated.mesh
+      <mesh
         ref={ref}
-        position={position}
+        position={[0, 0, 0]}
         toggleDrawer={toggleDrawer}
         name="TextDrawer" >
 
@@ -42,12 +25,13 @@ export const TextDrawer = ({ children, props }) => {
               backgroundColor: '#ffffff80',
               position: 'absolute',
               left: '-50vw',
-              top: '-20vh',
+              top: '-50vh',
               width: '30vw',
               height: '100vh',
               overflowWrap: 'anywhere',
               textAlign: 'center',
               padding: 5,
+              visibility: showDrawer ? 'visible' : 'hidden',
 
             }}>
             <h1>
@@ -64,7 +48,7 @@ export const TextDrawer = ({ children, props }) => {
             </h2>
           </div>
         </Html>
-      </animated.mesh>
+      </mesh>
     )
   }
 
