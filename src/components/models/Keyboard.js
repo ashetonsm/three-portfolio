@@ -1,3 +1,4 @@
+import * as THREE from 'three'
 import React, { useRef } from "react"
 import { useGLTF } from "@react-three/drei"
 
@@ -18,7 +19,9 @@ export default function Model({ ...props }) {
                 castShadow
                 geometry={nodes.Keys.geometry}
                 material={materials.Keyboard}
-                position={[-0.14, 0.4, 0.12]}
+                position={[-0.2, 0.4, 0.1]}
+                rotation={new THREE.Euler(0, 0.2, 0)}
+
             />
         </group>
     )
