@@ -6,15 +6,12 @@ This project is actively being worked on! There's a lot to do:
 
 
 - [ ] Finish textures
-    - [x] Change monitor texture on item selection
-    - [ ] Animate texture transition
+    - [x] Change monitor texture on selection
+    - [ ] Fade in monitor texture on selection
+- [ ] Re-implement camera rotation on selection
 - [ ] Feedback (audio, visual) on selection
     - [ ] Audio toggle
 - [ ] Desk toys with physics and animations
-- [ ] Fix routing 404 error on refresh
-- [x] Camera rotation
-    - [ ] Refine camera
-- [x] Zoom on click
+- [ ] Background decorations
 - [x] Center text
-- [x] Slide in the link drawer
-    - [ ] Slide out the link drawer when switching between interactives
+    - [ ] Text hover/select effects
