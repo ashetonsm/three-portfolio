@@ -15,8 +15,13 @@ import { TextDrawer } from '../components/UI/TextDrawer'
 import { NavBar } from '../components/UI/Navbar'
 
 export const DeskScene = () => {
-    const [activeItem, setActiveItem] = useState()
-    const [activeURL, setActiveURL] = useState()
+
+    const camX = 0
+    const camY = 1
+    const camZ = 0.90
+
+    const [activeItem, setActiveItem] = useState("Welcome!")
+    const [activeURL, setActiveURL] = useState("Please click an item or a link.")
     const [currentItem, setCurrentItem] = useState(null)
 
     const interactives = [
@@ -36,7 +41,7 @@ export const DeskScene = () => {
         setActive(linkText, linkUrl)
     }
 
-    function Interactives({ p = new THREE.Vector3(0, 0.5, 1) }) {
+    function Interactives({ p = new THREE.Vector3(camX, camY, camZ) }) {
 
         const ref = useRef()
         const screens = useRef()
@@ -48,38 +53,48 @@ export const DeskScene = () => {
             drawer.current = ref.current.parent.getObjectByName("TextDrawer")
             screens.current = ref.current.parent.getObjectByName("Screens")
 
-                drawer.current.toggleDrawer(true)
+            // drawer.current.toggleDrawer(true)
 
-                switch (currentItem) {
-                    case "SmallMonitor":
-                        screens.current.handleTexture(0)
-                        p.setX(-0.4)
-                        break
-                    case "Tablet":
-                        screens.current.handleTexture(1)
-                        p.setX(0.4)
-                        break
-                    case "BigMonitor":
-                        screens.current.handleTexture(2)
-                        p.setX(0.2)
-                        break
-                    case "Keyboard":
-                        screens.current.handleTexture(3)
-                        p.setX(-0.2)
-                        break
-                    default:
-                        screens.current.handleTexture()
-                        drawer.current.toggleDrawer(false)
-                        p.setX(0)
+            switch (currentItem) {
+                case "SmallMonitor":
+                    screens.current.handleTexture(0)
+                    p.setX(-0.4)
+                    break
+                case "Tablet":
+                    screens.current.handleTexture(1)
+                    p.setX(0.4)
+                    break
+                case "BigMonitor":
+                    screens.current.handleTexture(2)
+                    p.setX(0.2)
+                    break
+                case "Keyboard":
+                    screens.current.handleTexture(3)
+                    p.setX(-0.2)
+                    break
+                default:
+                    screens.current.handleTexture()
+                    // drawer.current.toggleDrawer(false)
+                    p.setX(0)
             }
         })
 
         useFrame((state) => {
-            state.camera.position.lerp(p, 0.025)
-            state.scene.children[4].position.set(state.camera.position.x, state.camera.position.y, 0)
 
-            // NavLinks
-            state.scene.children[3].position.set(state.camera.position.x - 0.2, state.camera.position.y + 0.3, 0)
+            if (currentItem) {
+                state.camera.position.lerp(p, 0.025)
+                // TextDrawer
+                state.scene.children[4].position.set(state.camera.position.x, state.camera.position.y + 0.4, 0)
+
+                // NavLinks
+                state.scene.children[3].position.set(state.camera.position.x, state.camera.position.y, 0)
+            } else {
+                // TextDrawer
+                state.scene.children[4].position.set(state.camera.position.x, state.camera.position.y + 0.4, 0)
+
+                // NavLinks
+                state.scene.children[3].position.set(state.camera.position.x, state.camera.position.y, 0)
+            }
         }, 0)
 
         return (
@@ -110,8 +125,9 @@ export const DeskScene = () => {
                         <div style={{
                             width: '100vw',
                             padding: 'none',
-                            textAlign: 'left',
-                            alignContent: 'center',
+                            textAlign: 'center',
+                            left: '-50vw',
+                            position: 'absolute',
                         }}>
 
                             {interactives.map((props) =>
@@ -160,7 +176,10 @@ export const DeskScene = () => {
     }
 
     return (
-        <Canvas shadows style={{ height: '100vh' }} camera={{ position: [0, 0.5, 5], fov: 50 }}>
+        <Canvas shadows style={{ height: '100vh' }} camera={{
+            position: [camX, camY, camZ],
+            rotation: [-0.4, 0, 0],
+        }}>
             <Suspense fallback={<Loader />}>
                 <ambientLight intensity={0.5} />
                 <spotLight
