@@ -1,13 +1,8 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import { Html } from '@react-three/drei'
 
 export const TextDrawer = ({ children, props }) => {
   const ref = useRef()
-  const [showDrawer, setShowDrawer] = useState(false)
-
-  const toggleDrawer = (newState) => {
-    setShowDrawer(newState)
-  }
 
   function RenderText() {
 
@@ -15,7 +10,6 @@ export const TextDrawer = ({ children, props }) => {
       <mesh
         ref={ref}
         position={[0, 0, 0]}
-        toggleDrawer={toggleDrawer}
         name="TextDrawer" >
 
         <Html {...props}
@@ -31,7 +25,6 @@ export const TextDrawer = ({ children, props }) => {
               overflowWrap: 'anywhere',
               textAlign: 'center',
               padding: 5,
-              visibility: showDrawer ? 'visible' : 'hidden',
 
             }}>
             <h1 style={{
