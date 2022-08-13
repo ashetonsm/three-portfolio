@@ -13,14 +13,14 @@ export default function Model({ ...props }) {
       dispose={null}>
 
       <mesh
-        castShadow
         receiveShadow
+        castShadow
         geometry={nodes.Desk_1.geometry}
         material={materials.DeskWood}
       />
       <mesh
-        castShadow
         receiveShadow
+        castShadow
         geometry={nodes.Desk_2.geometry}
         material={materials.Accessories}
       />

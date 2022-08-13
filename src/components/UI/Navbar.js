@@ -1,13 +1,18 @@
-export const Navbar = ({children}) => {
-    return (
-        <div>
-            <div>
-            I am the navbar
-            </div>
+import React from 'react'
 
-            {/* This is where the content goes */}
-            {children}
-            
-            </div>
-    )
+export const NavBar = (props) => {
+
+  return (
+      <button 
+      style={{
+        backgroundColor: 'transparent',
+        border: 'none',
+        cursor: 'pointer',
+        textDecoration: 'underline',
+        fontSize: '1.25em',
+      }}
+      onClick={(e) => props.sendMessage(props.name, props.linkText, props.url)}>
+        {props.linkText}
+      </button>
+  )
 }

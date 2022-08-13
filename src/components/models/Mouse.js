@@ -1,9 +1,10 @@
-import React, { useRef } from "react";
-import { useGLTF } from "@react-three/drei";
+import * as THREE from 'three'
+import React, { useRef } from "react"
+import { useGLTF } from "@react-three/drei"
 
 export default function Model({ ...props }) {
     const group = useRef();
-    const { nodes, materials } = useGLTF("/three-portfolio/models/Mouse.gltf");
+    const { nodes, materials } = useGLTF("/three-portfolio/models/Mouse.gltf")
 
     return (
         <group
@@ -13,13 +14,13 @@ export default function Model({ ...props }) {
 
             <mesh
                 castShadow
-                receiveShadow
                 geometry={nodes.Mouse.geometry}
                 material={materials.Accessories}
                 position={[0.31, 0.39, 0.12]}
+                rotation={new THREE.Euler(0, 0.4, 0)}
             />
         </group>
     )
 }
 
-useGLTF.preload("/three-portfolio/models/Mouse.gltf");
+useGLTF.preload("/three-portfolio/models/Mouse.gltf")
