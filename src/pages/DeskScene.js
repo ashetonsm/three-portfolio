@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { Canvas, useFrame, useThree } from "@react-three/fiber"
+import { Canvas, useFrame } from "@react-three/fiber"
 import { useRef, useState, useEffect, Suspense } from "react"
 import { useCursor, Html, useProgress } from '@react-three/drei'
 import BigMonitor from '../components/models/BigMonitor'
@@ -52,22 +52,22 @@ export const DeskScene = () => {
         const allNonInter = useRef()
 
         return (
-                <group
-                    ref={allNonInter}
-                    name="Non-Interactive Meshes"
-                >
-                    {nonInteractives.map((props) =>
-                        <NonInteractive
-                            key={props.modelName}
-                            name={props.modelName}
-                            model={props.model}
-                            {...props} />
-                    )}
-                </group>
+            <group
+                ref={allNonInter}
+                name="Non-Interactive Meshes"
+            >
+                {nonInteractives.map((props) =>
+                    <NonInteractive
+                        key={props.modelName}
+                        name={props.modelName}
+                        model={props.model}
+                        {...props} />
+                )}
+            </group>
         )
     }
 
-    function Interactives({ p = new THREE.Vector3(camX, camY, camZ - 0.25) }) {
+    function Interactives() {
 
         const allInteractives = useRef()
         const screens = useRef()
@@ -77,27 +77,29 @@ export const DeskScene = () => {
         useEffect(() => {
 
             rotationAngle.current = new THREE.Quaternion()
+            rotationAngle.current.setFromAxisAngle(new THREE.Vector3(-0.25, 0, 0), Math.PI / 2);
+
             screens.current = allInteractives.current.parent.getObjectByName("Screens")
 
             switch (currentItem) {
                 case "SmallMonitor":
                     screens.current.handleTexture(0)
-                    rotationAngle.current.setFromAxisAngle( new THREE.Vector3( -0.25, 0.10, 0 ), Math.PI / 2 );
+                    rotationAngle.current.setFromAxisAngle(new THREE.Vector3(-0.25, 0.1, 0), Math.PI / 2);
 
                     break
                 case "Tablet":
                     screens.current.handleTexture(1)
-                    rotationAngle.current.setFromAxisAngle( new THREE.Vector3( -0.25, -0.10, 0 ), Math.PI / 2 );
+                    rotationAngle.current.setFromAxisAngle(new THREE.Vector3(-0.25, -0.10, 0), Math.PI / 2);
 
                     break
                 case "BigMonitor":
                     screens.current.handleTexture(2)
-                    rotationAngle.current.setFromAxisAngle( new THREE.Vector3( -0.25, -0.05, 0 ), Math.PI / 2 );
+                    rotationAngle.current.setFromAxisAngle(new THREE.Vector3(-0.25, -0.05, 0), Math.PI / 2);
 
                     break
                 case "Keyboard":
                     screens.current.handleTexture(3)
-                    rotationAngle.current.setFromAxisAngle( new THREE.Vector3( -0.25, 0.05, 0 ), Math.PI / 2 );
+                    rotationAngle.current.setFromAxisAngle(new THREE.Vector3(-0.25, 0.05, 0), Math.PI / 2);
                     break
                 default:
                     screens.current.handleTexture()
@@ -111,20 +113,20 @@ export const DeskScene = () => {
                 state.camera.quaternion.slerp(rotationAngle.current, 0.025)
 
                 // TextDrawer
+                state.scene.children[4].position.set(state.camera.position.x, state.camera.position.y, 1)
                 state.scene.children[4].position.lerp(new THREE.Vector3(), 0.025)
-                state.scene.children[4].quaternion.slerp(rotationAngle.current, 0.025)
 
                 // NavLinks
-                state.scene.children[3].position.lerp(p, 0.025)
-                state.scene.children[3].quaternion.slerp(rotationAngle.current, 0.025)
+                state.scene.children[3].position.set(state.camera.position.x, state.camera.position.y, 1)
+                state.scene.children[3].position.lerp(new THREE.Vector3(), 0.025)
 
             } else {
                 // TextDrawer
-                state.scene.children[4].rotation.set(-0.25)
+                state.scene.children[4].quaternion.slerp(rotationAngle.current, 0.025)
 
 
                 // NavLinks
-                state.scene.children[3].rotation.set(rotationAngle.current)
+                state.scene.children[3].quaternion.slerp(rotationAngle.current, 0.025)
 
             }
         }, 0)
@@ -203,7 +205,7 @@ export const DeskScene = () => {
         )
     }
 
-    function NonInteractive({modelName, ...props }) {
+    function NonInteractive({ modelName, ...props }) {
         return (
             < props.model
                 name={modelName}
@@ -233,7 +235,7 @@ export const DeskScene = () => {
                     color={'#effeff'} />
 
                 <Interactives />
-                <NonInteractives/>
+                <NonInteractives />
 
             </Suspense>
         </Canvas>
