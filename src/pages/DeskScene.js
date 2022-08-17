@@ -74,8 +74,6 @@ export const DeskScene = () => {
         const linksRef = useRef()
         let rotationAngle = useRef()
 
-        const tempV = new THREE.Vector3()
-
         useEffect(() => {
 
             rotationAngle.current = new THREE.Quaternion()
@@ -87,7 +85,6 @@ export const DeskScene = () => {
                 case "SmallMonitor":
                     screens.current.handleTexture(0)
                     rotationAngle.current.setFromAxisAngle(new THREE.Vector3(-0.25, 0.1, 0), Math.PI / 2)
-
                     break
                 case "Tablet":
                     screens.current.handleTexture(1)
@@ -109,33 +106,11 @@ export const DeskScene = () => {
         })
 
         useFrame((state) => {
-
-            if (currentItem) {
-                // rotate the camera
-                state.camera.quaternion.slerp(rotationAngle.current, 0.025)
-
-                // TextDrawer
-                // state.scene.children[4].position.set(state.camera.position.x, state.camera.position.y, 1)
-                // state.scene.children[4].position.lerp(new THREE.Vector3(), 0.025)
-
-                // NavLinks
-                state.scene.children[3].position.set(state.camera.position.x, state.camera.position.y, 1)
-                state.scene.children[3].position.lerp(new THREE.Vector3(), 0.025)
-
-            } else {
-                // TextDrawer
-                state.scene.children[4].quaternion.slerp(rotationAngle.current, 0.025)
-
-
-                // NavLinks
-                state.scene.children[3].quaternion.slerp(rotationAngle.current, 0.025)
-
-            }
-        }, 0)
+            state.camera.quaternion.slerp(rotationAngle.current, 0.025)
+        })
 
         return (
             <>
-                {/* This is the object that our camera gets its coordinates from */}
                 <group
                     ref={allInteractives}
                     onClick={(e) => setCurrent(e.object.name, e.object.linkText, e.object.url)}
@@ -155,29 +130,29 @@ export const DeskScene = () => {
                 {/* This is how the NavBar links are rendered. They need the info from the models to zoom in. */}
                 <group
                     ref={linksRef}
-                    name="HTML Links" >
-
-                    <Html>
-                        <div style={{
+                    name="HTML Links"
+                >
+                    <Html
+                        style={{
                             width: '100vw',
                             padding: 'none',
                             textAlign: 'center',
-                            left: '0',
-                            top: '0',
-                            position: 'absolute',
-                        }}>
+                            left: '-50vw',
+                            top: '-50vh',
+                            position: 'relative',
+                        }}
+                    >
 
-                            {interactives.map((props) =>
-                                <NavBar
-                                    key={props.modelName}
-                                    name={props.modelName}
-                                    model={props.model}
-                                    linkText={props.linkText}
-                                    url={props.url}
-                                    sendMessage={(modelName, linkText, linkUrl) => setCurrent(modelName, linkText, linkUrl)}
-                                    {...props} />
-                            )}
-                        </div>
+                        {interactives.map((props) =>
+                            <NavBar
+                                key={props.modelName}
+                                name={props.modelName}
+                                model={props.model}
+                                linkText={props.linkText}
+                                url={props.url}
+                                sendMessage={(modelName, linkText, linkUrl) => setCurrent(modelName, linkText, linkUrl)}
+                                {...props} />
+                        )}
                     </Html>
                 </group>
 
@@ -187,7 +162,6 @@ export const DeskScene = () => {
                 </TextDrawer>
 
                 <ScreenOverlay name="Screens" />
-
             </>
         )
     }
@@ -200,7 +174,6 @@ export const DeskScene = () => {
                 name={modelName}
                 linkText={linkText}
                 url={url}
-                position={[0, 0, 0]}
                 onPointerOver={(e) => (hover(true))}
                 onPointerOut={() => hover(false)}
             />
@@ -211,7 +184,6 @@ export const DeskScene = () => {
         return (
             < props.model
                 name={modelName}
-                position={[0, 0, 0]}
             />
         )
     }
@@ -238,7 +210,6 @@ export const DeskScene = () => {
 
                 <Interactives />
                 <NonInteractives />
-
             </Suspense>
         </Canvas>
     )
