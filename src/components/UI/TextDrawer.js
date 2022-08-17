@@ -9,7 +9,6 @@ export const TextDrawer = ({ children, props }) => {
     return (
       <mesh
         ref={ref}
-        position={[0, 0, 0]}
         name="TextDrawer" >
 
         <Html {...props}
@@ -18,7 +17,8 @@ export const TextDrawer = ({ children, props }) => {
             style={{
               backgroundColor: '#ffffff80',
               position: 'absolute',
-              left: '-50vw',
+              top: '0',
+              left: '0',
               width: '100vw',
               height: '20vh',
               overflowWrap: 'anywhere',
