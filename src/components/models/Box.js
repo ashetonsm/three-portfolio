@@ -14,6 +14,7 @@ export const Box = (props) => {
             dispose={null}
             >
             <mesh
+            position={[0, 0.02, 1.55]}
                 receiveShadow
                 geometry={nodes.Cube.geometry}
                 material={materials.Background}
