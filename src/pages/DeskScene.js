@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { Canvas, useFrame } from "@react-three/fiber"
+import { Canvas, useFrame, useThree } from "@react-three/fiber"
 import { useRef, useState, useEffect, Suspense } from "react"
 import { useCursor, Html, useProgress } from '@react-three/drei'
 import BigMonitor from '../components/models/BigMonitor'
@@ -18,7 +18,7 @@ export const DeskScene = () => {
 
     const camX = 0
     const camY = 1
-    const camZ = 0.90
+    const camZ = 1
 
     const [activeItem, setActiveItem] = useState("Welcome!")
     const [activeURL, setActiveURL] = useState("Please select a model or a link.")
@@ -31,6 +31,13 @@ export const DeskScene = () => {
         { model: Tablet, modelName: "Tablet", linkText: "ArtStation", url: "https://artstation.com/ashetonsm" },
     ]
 
+    const nonInteractives = [
+        { model: Desk, modelName: "Desk" },
+        { model: Computer, modelName: "Computer" },
+        { model: Mouse, modelName: "Mouse" },
+        { model: Box, modelName: "Box" },
+    ]
+
     const setActive = (newItem, newURL) => {
         setActiveItem(newItem)
         setActiveURL(newURL)
@@ -41,59 +48,84 @@ export const DeskScene = () => {
         setActive(linkText, linkUrl)
     }
 
-    function Interactives({ p = new THREE.Vector3(camX, camY, camZ) }) {
+    function NonInteractives() {
+        const allNonInter = useRef()
 
-        const ref = useRef()
+        return (
+                <group
+                    ref={allNonInter}
+                    name="Non-Interactive Meshes"
+                >
+                    {nonInteractives.map((props) =>
+                        <NonInteractive
+                            key={props.modelName}
+                            name={props.modelName}
+                            model={props.model}
+                            {...props} />
+                    )}
+                </group>
+        )
+    }
+
+    function Interactives({ p = new THREE.Vector3(camX, camY, camZ - 0.25) }) {
+
+        const allInteractives = useRef()
         const screens = useRef()
-        let drawer = useRef()
         const linksRef = useRef()
+        let rotationAngle = useRef();
 
         useEffect(() => {
 
-            drawer.current = ref.current.parent.getObjectByName("TextDrawer")
-            screens.current = ref.current.parent.getObjectByName("Screens")
-
-            // drawer.current.toggleDrawer(true)
+            rotationAngle.current = new THREE.Quaternion()
+            screens.current = allInteractives.current.parent.getObjectByName("Screens")
 
             switch (currentItem) {
                 case "SmallMonitor":
                     screens.current.handleTexture(0)
-                    p.setX(-0.4)
+                    rotationAngle.current.setFromAxisAngle( new THREE.Vector3( -0.25, 0.10, 0 ), Math.PI / 2 );
+
                     break
                 case "Tablet":
                     screens.current.handleTexture(1)
-                    p.setX(0.4)
+                    rotationAngle.current.setFromAxisAngle( new THREE.Vector3( -0.25, -0.10, 0 ), Math.PI / 2 );
+
                     break
                 case "BigMonitor":
                     screens.current.handleTexture(2)
-                    p.setX(0.2)
+                    rotationAngle.current.setFromAxisAngle( new THREE.Vector3( -0.25, -0.05, 0 ), Math.PI / 2 );
+
                     break
                 case "Keyboard":
                     screens.current.handleTexture(3)
-                    p.setX(-0.2)
+                    rotationAngle.current.setFromAxisAngle( new THREE.Vector3( -0.25, 0.05, 0 ), Math.PI / 2 );
                     break
                 default:
                     screens.current.handleTexture()
-                    // drawer.current.toggleDrawer(false)
-                    p.setX(0)
             }
         })
 
         useFrame((state) => {
 
             if (currentItem) {
-                state.camera.position.lerp(p, 0.025)
+                // rotate the camera
+                state.camera.quaternion.slerp(rotationAngle.current, 0.025)
+
                 // TextDrawer
-                state.scene.children[4].position.set(state.camera.position.x, state.camera.position.y + 0.4, 0)
+                state.scene.children[4].position.lerp(new THREE.Vector3(), 0.025)
+                state.scene.children[4].quaternion.slerp(rotationAngle.current, 0.025)
 
                 // NavLinks
-                state.scene.children[3].position.set(state.camera.position.x, state.camera.position.y, 0)
+                state.scene.children[3].position.lerp(p, 0.025)
+                state.scene.children[3].quaternion.slerp(rotationAngle.current, 0.025)
+
             } else {
                 // TextDrawer
-                state.scene.children[4].position.set(state.camera.position.x, state.camera.position.y + 0.4, 0)
+                state.scene.children[4].rotation.set(-0.25)
+
 
                 // NavLinks
-                state.scene.children[3].position.set(state.camera.position.x, state.camera.position.y, 0)
+                state.scene.children[3].rotation.set(rotationAngle.current)
+
             }
         }, 0)
 
@@ -101,7 +133,7 @@ export const DeskScene = () => {
             <>
                 {/* This is the object that our camera gets its coordinates from */}
                 <group
-                    ref={ref}
+                    ref={allInteractives}
                     onClick={(e) => setCurrent(e.object.name, e.object.linkText, e.object.url)}
                     name="Interactive Meshes"
                 >
@@ -127,6 +159,7 @@ export const DeskScene = () => {
                             padding: 'none',
                             textAlign: 'center',
                             left: '-50vw',
+                            top: '-60vh',
                             position: 'absolute',
                         }}>
 
@@ -170,6 +203,15 @@ export const DeskScene = () => {
         )
     }
 
+    function NonInteractive({modelName, ...props }) {
+        return (
+            < props.model
+                name={modelName}
+                position={[0, 0, 0]}
+            />
+        )
+    }
+
     function Loader() {
         const { progress } = useProgress()
         return <Html center>{Math.round(progress)} % loaded</Html>
@@ -191,10 +233,8 @@ export const DeskScene = () => {
                     color={'#effeff'} />
 
                 <Interactives />
-                <Box position={[0, 0.05, 1]} />
-                <Desk />
-                <Computer />
-                <Mouse />
+                <NonInteractives/>
+
             </Suspense>
         </Canvas>
     )
