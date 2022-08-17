@@ -72,34 +72,36 @@ export const DeskScene = () => {
         const allInteractives = useRef()
         const screens = useRef()
         const linksRef = useRef()
-        let rotationAngle = useRef();
+        let rotationAngle = useRef()
+
+        const tempV = new THREE.Vector3()
 
         useEffect(() => {
 
             rotationAngle.current = new THREE.Quaternion()
-            rotationAngle.current.setFromAxisAngle(new THREE.Vector3(-0.25, 0, 0), Math.PI / 2);
+            rotationAngle.current.setFromAxisAngle(new THREE.Vector3(-0.25, 0, 0), Math.PI / 2)
 
             screens.current = allInteractives.current.parent.getObjectByName("Screens")
 
             switch (currentItem) {
                 case "SmallMonitor":
                     screens.current.handleTexture(0)
-                    rotationAngle.current.setFromAxisAngle(new THREE.Vector3(-0.25, 0.1, 0), Math.PI / 2);
+                    rotationAngle.current.setFromAxisAngle(new THREE.Vector3(-0.25, 0.1, 0), Math.PI / 2)
 
                     break
                 case "Tablet":
                     screens.current.handleTexture(1)
-                    rotationAngle.current.setFromAxisAngle(new THREE.Vector3(-0.25, -0.10, 0), Math.PI / 2);
+                    rotationAngle.current.setFromAxisAngle(new THREE.Vector3(-0.25, -0.10, 0), Math.PI / 2)
 
                     break
                 case "BigMonitor":
                     screens.current.handleTexture(2)
-                    rotationAngle.current.setFromAxisAngle(new THREE.Vector3(-0.25, -0.05, 0), Math.PI / 2);
+                    rotationAngle.current.setFromAxisAngle(new THREE.Vector3(-0.25, -0.05, 0), Math.PI / 2)
 
                     break
                 case "Keyboard":
                     screens.current.handleTexture(3)
-                    rotationAngle.current.setFromAxisAngle(new THREE.Vector3(-0.25, 0.05, 0), Math.PI / 2);
+                    rotationAngle.current.setFromAxisAngle(new THREE.Vector3(-0.25, 0.05, 0), Math.PI / 2)
                     break
                 default:
                     screens.current.handleTexture()
@@ -113,8 +115,8 @@ export const DeskScene = () => {
                 state.camera.quaternion.slerp(rotationAngle.current, 0.025)
 
                 // TextDrawer
-                state.scene.children[4].position.set(state.camera.position.x, state.camera.position.y, 1)
-                state.scene.children[4].position.lerp(new THREE.Vector3(), 0.025)
+                // state.scene.children[4].position.set(state.camera.position.x, state.camera.position.y, 1)
+                // state.scene.children[4].position.lerp(new THREE.Vector3(), 0.025)
 
                 // NavLinks
                 state.scene.children[3].position.set(state.camera.position.x, state.camera.position.y, 1)
@@ -160,8 +162,8 @@ export const DeskScene = () => {
                             width: '100vw',
                             padding: 'none',
                             textAlign: 'center',
-                            left: '-50vw',
-                            top: '-60vh',
+                            left: '0',
+                            top: '0',
                             position: 'absolute',
                         }}>
 
