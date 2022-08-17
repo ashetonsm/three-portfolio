@@ -19,7 +19,6 @@ export const TextDrawer = ({ children, props }) => {
               backgroundColor: '#ffffff80',
               position: 'absolute',
               left: '-50vw',
-              top: '20vh',
               width: '100vw',
               height: '20vh',
               overflowWrap: 'anywhere',
