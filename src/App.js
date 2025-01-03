@@ -1,5 +1,5 @@
 import './App.css'
-import { DeskScene } from './pages/DeskScene'
+import DeskScene from './pages/DeskScene'
 import { Switch, Route } from "wouter"
 
 function App() {
